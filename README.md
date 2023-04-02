@@ -23,4 +23,4 @@ with installed('polog'):
   log('some message!')
 ```
 
-This code installs the polog package, imports the necessary objects from there and displays a message. At the end of the program, there will be no excess garbage left in the system. This way you can easily try different packages without bothering with their installation and subsequent removal.
+This code installs the [polog](https://github.com/pomponchik/polog) package, imports the necessary objects from there and displays a message. At the end of the program, there will be no excess garbage left in the system. This way you can easily try different packages without bothering with their installation and subsequent removal.

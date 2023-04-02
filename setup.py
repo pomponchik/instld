@@ -6,14 +6,14 @@ with open("README.md", "r") as readme_file:
 requirements = []
 
 setup(
-    name="installed",
+    name="instasamka",
     version="0.0.1",
     author="Evgeniy Blinov",
     author_email="zheni-b@yandex.ru",
     description="The simplest package management from the source code",
     long_description=readme,
     long_description_content_type="text/markdown",
-    url="https://github.com/pomponchik/installed",
+    url="https://github.com/pomponchik/instasamka",
     packages=find_packages(),
     install_requires=requirements,
     classifiers=[

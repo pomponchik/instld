@@ -2,7 +2,7 @@
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code.
 
-Install it:
+Install [it](https://pypi.org/project/instld/):
 
 ```bash
 pip install instld

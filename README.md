@@ -6,7 +6,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
 Install it:
 
 ```bash
-pip install instasamka
+pip install instld
 ```
 
 And use as in this example:

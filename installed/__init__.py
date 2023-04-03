@@ -9,7 +9,7 @@ from contextlib import contextmanager
 
 class InstallingPackageError(subprocess.CalledProcessError):
     pass
-    
+
 
 lock = Lock()
 
@@ -17,9 +17,14 @@ lock = Lock()
 @contextmanager
 def search_path(base_dir):
     path_to_venv = os.path.join(base_dir, 'venv')
-    sys_path = os.path.join(path_to_venv, 'lib', 'python3.9', 'site-packages')
+    sys_path = os.path.join(path_to_venv, 'lib')
 
     subprocess.check_call([sys.executable, '-m', 'venv', path_to_venv], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    for maybe_directory in os.listdir(path=sys_path):
+        maybe_directory_full = os.path.join(sys_path, maybe_directory)
+        if maybe_directory.startswith('python') and os.path.isdir(maybe_directory_full):
+            sys_path = os.path.join(sys_path, maybe_directory, 'site-packages')
 
     sys.path.append(sys_path)
 
@@ -29,16 +34,15 @@ def search_path(base_dir):
 
 @contextmanager
 def pip_context(package_name):
-    with lock:
-        with tempfile.TemporaryDirectory() as directory:
-            with search_path(directory) as where:
-                try:
-
+    with tempfile.TemporaryDirectory() as directory:
+        with search_path(directory) as where:
+            try:
+                with lock:
                     subprocess.check_call([sys.executable, '-m', 'pip', 'install', f'--target={where}', package_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                except subprocess.CalledProcessError as e:
-                    raise InstallingPackageError from e
+            except subprocess.CalledProcessError as e:
+                raise InstallingPackageError from e
 
-                yield
+            yield
 
 
 class ProxyModule(sys.modules[__name__].__class__):

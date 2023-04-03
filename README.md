@@ -2,7 +2,6 @@
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code.
 
-
 Install it:
 
 ```bash

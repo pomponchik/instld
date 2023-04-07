@@ -1,5 +1,7 @@
 # INSTALLED: the simplest package management from the source code
 
+[![codecov](https://codecov.io/gh/pomponchik/installed/branch/master/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
+
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code.
 
 Install [it](https://pypi.org/project/instld/):

@@ -24,10 +24,6 @@ jobs:
       shell: bash
       run: pip install -r requirements_dev.txt
 
-    - name: Install dependencies 2
-      shell: bash
-      run: pip install pytest-cov==4.0.0
-
     - name: Run tests and show coverage on the command line
       run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear && coverage report -m
 

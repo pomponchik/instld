@@ -4,6 +4,7 @@
 [![Downloads](https://pepy.tech/badge/instld)](https://pepy.tech/project/installed)
 [![codecov](https://codecov.io/gh/pomponchik/installed/branch/main/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
 [![Test-Package](https://github.com/pomponchik/installed/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/installed/actions/workflows/coverage.yml)
+[![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code.

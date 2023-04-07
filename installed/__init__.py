@@ -26,11 +26,13 @@ def search_path(base_dir):
         if maybe_directory.startswith('python') and os.path.isdir(maybe_directory_full):
             sys_path = os.path.join(sys_path, maybe_directory, 'site-packages')
 
-    sys.path.append(sys_path)
+    with lock:
+        sys.path.insert(0, sys_path)
 
     yield sys_path
 
-    del sys.path[sys.path.index(sys_path)]
+    with lock:
+        del sys.path[sys.path.index(sys_path)]
 
 @contextmanager
 def pip_context(package_name):

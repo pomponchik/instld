@@ -25,6 +25,7 @@ def search_path(base_dir):
         maybe_directory_full = os.path.join(sys_path, maybe_directory)
         if maybe_directory.startswith('python') and os.path.isdir(maybe_directory_full):
             sys_path = os.path.join(sys_path, maybe_directory, 'site-packages')
+            break
 
     with lock:
         sys.path.insert(0, sys_path)

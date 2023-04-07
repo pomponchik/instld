@@ -1,0 +1,42 @@
+name: Test-Package
+
+on:
+  push
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+          python-version: ${{ matrix.python-version }}
+
+
+    - name: Install dependencies
+      shell: bash
+      run: pip install -r requirements_dev.txt
+
+    - name: Install dependencies 2
+      shell: bash
+      run: pip install pytest-cov==4.0.0
+
+    - name: Run tests and show coverage on the command line
+      run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear && coverage report -m
+
+    - name: Upload reports to codecov
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+      if: runner.os == 'Linux'
+      run: |
+       curl -Os https://uploader.codecov.io/latest/linux/codecov
+       find . -iregex "codecov.*"
+       chmod +x codecov
+       ./codecov -t ${CODECOV_TOKEN}

@@ -1,6 +1,10 @@
 # INSTALLED: the simplest package management from the source code
 
+[![Downloads](https://pepy.tech/badge/installed/month)](https://pepy.tech/project/installed)
+[![Downloads](https://pepy.tech/badge/installed)](https://pepy.tech/project/installed)
 [![codecov](https://codecov.io/gh/pomponchik/installed/branch/master/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
+[![Test-Package](https://github.com/pomponchik/installed/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/installed/actions/workflows/coverage.yml)
+[![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code.
 

@@ -2,7 +2,7 @@
 
 [![Downloads](https://pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)
 [![Downloads](https://pepy.tech/badge/instld)](https://pepy.tech/project/installed)
-[![codecov](https://codecov.io/gh/pomponchik/installed/branch/master/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
+[![codecov](https://codecov.io/gh/pomponchik/installed/branch/main/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
 [![Test-Package](https://github.com/pomponchik/installed/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/installed/actions/workflows/coverage.yml)
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
 

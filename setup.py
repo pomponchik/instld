@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 
+
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
@@ -7,7 +8,7 @@ requirements = []
 
 setup(
     name="instld",
-    version="0.0.3",
+    version="0.0.4",
     author="Evgeniy Blinov",
     author_email="zheni-b@yandex.ru",
     description="The simplest package management from the source code",

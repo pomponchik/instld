@@ -1,7 +1,7 @@
 # INSTALLED: the simplest package management from the source code
 
 [![Downloads](https://pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)
-[![Downloads](https://pepy.tech/badge/instld)](https://pepy.tech/project/installed)
+[![Downloads](https://pepy.tech/badge/instld)](https://pepy.tech/project/instld)
 [![codecov](https://codecov.io/gh/pomponchik/installed/branch/main/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
 [![Test-Package](https://github.com/pomponchik/installed/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/installed/actions/workflows/coverage.yml)
 [![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)

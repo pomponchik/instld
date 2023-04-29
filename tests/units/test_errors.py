@@ -1,0 +1,1 @@
+from installed.errors import InstallingPackageError

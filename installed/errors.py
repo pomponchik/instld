@@ -1,0 +1,2 @@
+class InstallingPackageError(Exception):
+    pass

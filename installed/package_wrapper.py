@@ -15,7 +15,9 @@ class PackageWrapper:
 
     def import_here(self, module_name):
         with self.new_path():
-            return importlib.import_module(module_name)
+            module = importlib.import_module(module_name)
+            importlib.reload(module)
+            return module
 
     @contextmanager
     def new_path(self):

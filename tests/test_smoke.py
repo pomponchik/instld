@@ -9,20 +9,31 @@ import installed
 
 def test_polog_install_and_import():
     with installed('polog'):
-        from polog import log, config, file_writer
+        import polog
+        importlib.reload(polog)
+
+
+def test_polog_install_and_import_with_logger_none():
+    with installed('polog', logger=None):
+        import polog
+        importlib.reload(polog)
 
 
 def test_polog_install_two_and_import():
     with installed('polog', 'astrologic'):
-        from polog import log, config, file_writer
-        from astrologic import switcher
+        import polog
+        import astrologic
+        importlib.reload(polog)
+        importlib.reload(astrologic)
 
 
 def test_polog_install_two_contexts_and_import():
     with installed('polog'):
         with installed('astrologic'):
-            from polog import log, config, file_writer
-            from astrologic import switcher
+            import polog
+            import astrologic
+            importlib.reload(polog)
+            importlib.reload(astrologic)
 
 
 def test_deleting_contexts():
@@ -32,8 +43,6 @@ def test_deleting_contexts():
     with pytest.raises(ModuleNotFoundError):
         import polog
         importlib.reload(polog)
-
-
 
 
 def test_sys_path_lenth():

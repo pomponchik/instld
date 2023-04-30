@@ -1,18 +1,25 @@
-import os
-from tempfile import TemporaryDirectory
-from modulefinder import ModuleFinder
+import sys
+import importlib
+from contextlib import contextmanager
+import copy
 
 
 class PackageWrapper:
+    original_path = copy.copy(sys.path)
+
     def __init__(self, where):
         self.where = where
 
-    def import_here(self, module_name):
-        with TemporaryDirectory() as directory:
-            file_name = os.path.join(directory, 'file.py')
-            with open(file_name, 'w') as file:
-                file.write(f'import {module_name}')
+    def __str__(self):
+        return f'<PackageWrapper with path "{self.where}">'
 
-            finder = ModuleFinder(path=[self.where])
-            finder.run_script(file_name)
-            return finder.modules[module_name]
+    def import_here(self, module_name):
+        with self.new_path():
+            return importlib.import_module(module_name)
+
+    @contextmanager
+    def new_path(self):
+        old_path = sys.path
+        sys.path = [self.where] + copy.copy(self.original_path)
+        yield
+        sys.path = old_path

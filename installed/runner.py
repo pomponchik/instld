@@ -2,7 +2,7 @@ import sys
 import subprocess
 
 
-def run_python(args: list[str], logger):
+def run_python(args, logger):
     all_args = [sys.executable, *args]
     args_string_representation = " ".join(all_args)
 

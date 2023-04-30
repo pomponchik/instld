@@ -54,3 +54,9 @@ def test_sys_path_lenth():
         assert sys.path[1:] == sys_path_copy
 
     assert len(sys.path) == number_before
+
+
+def test_fazy_install_and_autoimport():
+    with installed('fazy') as package:
+        f = package.import_here('f')
+        assert f('kek') == 'kek'

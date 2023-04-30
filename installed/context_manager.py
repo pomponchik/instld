@@ -7,6 +7,7 @@ from io import StringIO
 from contextlib import contextmanager
 
 from installed.errors import InstallingPackageError
+from installed.package_wrapper import PackageWrapper
 
 
 lock = Lock()
@@ -42,4 +43,4 @@ def pip_context(packages_names, logger, runner):
             except subprocess.CalledProcessError as e:
                 raise InstallingPackageError from e
 
-            yield
+            yield PackageWrapper(where)

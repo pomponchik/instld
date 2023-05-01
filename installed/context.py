@@ -4,14 +4,17 @@ from contextlib import contextmanager
 import copy
 
 
-class PackageWrapper:
+class Context:
     original_path = copy.copy(sys.path)
 
     def __init__(self, where):
         self.where = where
 
     def __str__(self):
-        return f'<PackageWrapper with path "{self.where}">'
+        return f'<Context with path "{self.where}">'
+
+    def __repr__(self):
+        return f'{type(self).__name__}("{self.where}")'
 
     def import_here(self, module_name):
         with self.new_path():

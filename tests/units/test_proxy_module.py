@@ -25,6 +25,8 @@ def test_convert_options_wrong():
         installed.convert_options({'--root': 'kek'})
     with pytest.raises(ValueError):
         installed.convert_options({'platform': True})
+    with pytest.raises(ValueError):
+        installed.convert_options({'dry_run': 1})
 
 
 def test_install_with_options():

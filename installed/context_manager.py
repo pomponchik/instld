@@ -1,6 +1,7 @@
 import os
 import sys
 import tempfile
+import subprocess
 
 from threading import Lock
 from io import StringIO

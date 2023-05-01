@@ -26,5 +26,7 @@ class Context:
     def new_path(self):
         old_path = sys.path
         sys.path = [self.where] + copy.copy(self.original_path)
+        importlib.invalidate_caches()
         yield
         sys.path = old_path
+        importlib.invalidate_caches()

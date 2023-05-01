@@ -8,7 +8,9 @@ def run_python(args, logger):
 
     try:
         logger.info(f'The beginning of the execution of the command "{args_string_representation}".')
-        subprocess.check_call(all_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        task = subprocess.check_call(all_args)
+        #output = task.communicate()
+        #print(output)
         logger.info(f'The command "{args_string_representation}" has been executed.')
 
     except subprocess.CalledProcessError as e:

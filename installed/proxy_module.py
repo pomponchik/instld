@@ -7,11 +7,11 @@ from installed.empty_logger import EmptyLogger
 
 
 class ProxyModule(sys.modules[__name__].__class__):
-    def __call__(self, *packages_names, logger=logging, runner=run_python, **options):
+    def __call__(self, *packages_names, logger=logging, runner=run_python, catch_output=False, **options):
         if logger is None:
             logger = EmptyLogger()
         options = self.convert_options(options)
-        return pip_context(packages_names, options, logger, runner)
+        return pip_context(packages_names, options, logger, runner, catch_output)
 
     def convert_options(self, options):
         result = []

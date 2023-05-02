@@ -17,7 +17,7 @@ def search_path(base_dir, logger, runner):
     path_to_venv = os.path.join(base_dir, 'venv')
     sys_path = os.path.join(path_to_venv, 'lib')
 
-    standard_runner(['-m', 'venv', path_to_venv], logger)
+    standard_runner(['-m', 'venv', path_to_venv], logger, True, [])
 
     for maybe_directory in os.listdir(path=sys_path):
         maybe_directory_full = os.path.join(sys_path, maybe_directory)
@@ -34,13 +34,21 @@ def search_path(base_dir, logger, runner):
         del sys.path[sys.path.index(sys_path)]
 
 @contextmanager
-def pip_context(packages_names, options, logger, runner):
+def pip_context(packages_names, options, logger, runner, catch_output):
     with tempfile.TemporaryDirectory() as directory:
         with search_path(directory, logger, runner) as where:
+            outputs = []
             try:
                 for package_name in packages_names:
-                    runner(['-m', 'pip', 'install', f'--target={where}', *options, package_name], logger)
+                    runner(['-m', 'pip', 'install', f'--target={where}', *options, package_name], logger, catch_output, outputs)
             except subprocess.CalledProcessError as e:
-                raise InstallingPackageError from e
+                new_error = InstallingPackageError()
+                if len(outputs) == 2:
+                    new_error.stdout = outputs[0]
+                    new_error.stderr = outputs[1]
+                else:
+                    new_error.stdout = ''
+                    new_error.stderr = ''
+                raise new_error from e
 
             yield Context(where, logger)

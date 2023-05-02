@@ -32,7 +32,7 @@ def test_convert_options_wrong():
 def test_install_with_options():
     calls = []
 
-    def runner(args, logger):
+    def runner(args, logger, catch_output, outputs):
         calls.append(args)
 
     with installed('kek_pack', runner=runner, platform='kek', no_deps=True):

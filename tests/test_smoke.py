@@ -1,6 +1,8 @@
 import sys
 import importlib
 import copy
+from io import StringIO
+from contextlib import redirect_stdout
 
 import pytest
 
@@ -94,3 +96,28 @@ def test_super_project_nested():
                 assert module_1.version == '0.0.1'
                 assert module_2.version == '0.0.2'
                 assert module_3.version == '0.0.1'
+
+
+
+def test_catch_output_default():
+    with redirect_stdout(StringIO()) as context:
+        with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/'):
+            pass
+
+    assert len(context.getvalue()) > 0
+
+
+def test_catch_output_false():
+    with redirect_stdout(StringIO()) as context:
+        with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/', catch_output=False):
+            pass
+
+    assert len(context.getvalue()) > 0
+
+
+def test_catch_output_true():
+    with redirect_stdout(StringIO()) as context:
+        with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/', catch_output=True):
+            pass
+
+    assert len(context.getvalue()) == 0

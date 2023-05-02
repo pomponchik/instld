@@ -3,16 +3,14 @@ import sys
 import tempfile
 import subprocess
 
-from threading import Lock
 from io import StringIO
 from contextlib import contextmanager
 
 from installed.errors import InstallingPackageError
 from installed.context import Context
 from installed.runner import run_python as standard_runner
+from installed.lock import lock
 
-
-lock = Lock()
 
 @contextmanager
 def search_path(base_dir, logger, runner):
@@ -45,4 +43,4 @@ def pip_context(packages_names, options, logger, runner):
             except subprocess.CalledProcessError as e:
                 raise InstallingPackageError from e
 
-            yield Context(where)
+            yield Context(where, logger)

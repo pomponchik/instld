@@ -57,7 +57,7 @@ def test_sys_path_lenth():
 
 
 def test_fazy_install_and_autoimport():
-    with installed('fazy') as package:
+    with installed('fazy==0.0.2') as package:
         f = package.import_here('f')
         assert f('kek') == 'kek'
 

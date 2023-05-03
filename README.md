@@ -40,7 +40,7 @@ import installed
 
 
 with installed('some_package') as context:
-  import some_module
+    import some_module
 ```
 
 The above code downloads `some_package` and imports `some_module` from it.
@@ -52,14 +52,14 @@ The context manager `installed` generates a context. While you are inside the co
 
 ```python
 with installed('some_package'):
-  import some_module
+    import some_module
 ```
 
 However, there are cases when you need the module to be imported strictly from a given context. In this case, it is better to use the `import_here` method:
 
 ```python
 with installed('some_package') as context:
-  module = context.import_here('some_module')
+    module = context.import_here('some_module')
 ```
 
 The library provides isolation of various contexts among themselves, so in the second case, the module will be imported strictly from the context that you need.
@@ -71,9 +71,9 @@ You can install several packages by specifying their names separated by commas:
 
 ```python
 with installed('package_1', 'package_2', 'package_3') as context:
-  module_1 = context.import_here('module_1')
-  module_2 = context.import_here('module_2')
-  module_3 = context.import_here('module_3')
+    module_1 = context.import_here('module_1')
+    module_2 = context.import_here('module_2')
+    module_3 = context.import_here('module_3')
 ```
 
 In this case, all packages will be installed in one context and you can import them all from there.
@@ -82,11 +82,11 @@ You can also create separate contexts for different packages:
 
 ```python
 with installed('package_1') as context_1:
-  with installed('package_2') as context_2:
-    with installed('package_3') as context_3:
-      module_1 = context_1.import_here('module_1')
-      module_2 = context_2.import_here('module_2')
-      module_3 = context_3.import_here('module_3')
+    with installed('package_2') as context_2:
+        with installed('package_3') as context_3:
+            module_1 = context_1.import_here('module_1')
+            module_2 = context_2.import_here('module_2')
+            module_3 = context_3.import_here('module_3')
 ```
 
 In this case, each package was installed in its own independent context, and we import each module from the context where the corresponding package was installed.
@@ -112,7 +112,7 @@ You can use [any options](https://pip.pypa.io/en/stable/cli/pip_install/) availa
 
 ```python
 with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/'):
-  import super_test
+    import super_test
 ```
 
 You cannot use options that tell `pip` where to install libraries.
@@ -164,11 +164,11 @@ from installed.errors import InstallingPackageError
 
 
 try:
-  with installed('some_wrong_pack', catch_output=True):
-    import some_wrong_module
+    with installed('some_wrong_pack', catch_output=True):
+        import some_wrong_module
 except InstallingPackageError as e:
-  print(e.stdout)
-  print(e.stderr)
+    print(e.stdout)
+    print(e.stderr)
 ```
 
 Logging is also enabled by default for installing packages. You can see it if you configure logging correctly. In this case:
@@ -186,7 +186,7 @@ logging.basicConfig(
 )
 
 with installed('flask', catch_output=True):
-  import flask
+    import flask
 ```
 
 ... the logs will look something like this:

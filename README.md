@@ -1,4 +1,4 @@
-![logo](/logo2.bmp)
+![logo](/logo2.svg)
 
 # INSTLD: the simplest package management in runtime
 

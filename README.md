@@ -1,3 +1,5 @@
+![logo](/logo.png)
+
 # INSTLD: the simplest package management in runtime
 
 [![Downloads](https://pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)

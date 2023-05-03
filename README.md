@@ -1,8 +1,4 @@
-![logo](/logo5.png)
-
-<img src="docs/assets/logo.png" alt="Style Dictionary logo and mascot" title="&quot;Pascal&quot;" width="100" align="right" />
-
-
+![logo](/docs/assets/logo5.png)
 
 # INSTLD: the simplest package management in runtime
 

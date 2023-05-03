@@ -1,9 +1,9 @@
-# INSTALLED: the simplest package management in runtime
+# INSTLD: the simplest package management in runtime
 
 [![Downloads](https://pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)
 [![Downloads](https://pepy.tech/badge/instld)](https://pepy.tech/project/instld)
-[![codecov](https://codecov.io/gh/pomponchik/installed/branch/main/graph/badge.svg)](https://codecov.io/gh/pomponchik/installed)
-[![Test-Package](https://github.com/pomponchik/installed/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/installed/actions/workflows/coverage.yml)
+[![codecov](https://codecov.io/gh/pomponchik/installed/branch/main/graph/badge.svg)](https://codecov.io/gh/pomponchik/instld)
+[![Test-Package](https://github.com/pomponchik/instld/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/instld/actions/workflows/coverage.yml)
 [![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
 

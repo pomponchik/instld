@@ -8,13 +8,13 @@ requirements = []
 
 setup(
     name="instld",
-    version="0.0.7",
+    version="0.0.8",
     author="Evgeniy Blinov",
     author_email="zheni-b@yandex.ru",
     description="The simplest package management in runtime",
     long_description=readme,
     long_description_content_type="text/markdown",
-    url="https://github.com/pomponchik/installed",
+    url="https://github.com/pomponchik/instld",
     packages=find_packages(exclude=["tests"]),
     install_requires=requirements,
     classifiers=[

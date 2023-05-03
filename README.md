@@ -8,7 +8,7 @@
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code. In runtime.
-
+&nbsp;
 : ⚡ You can use 2 different versions of the same library in the same program.
 : ⚡ You can use incompatible libraries in the same project, as well as libraries with incompatible/conflicting dependencies.
 : ⚡ It's easy to share written scripts. The script file becomes self-sufficient - the user does not need to install the necessary libraries.

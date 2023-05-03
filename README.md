@@ -9,10 +9,10 @@
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code. In runtime.
 
-- ⚡ You can use 2 different versions of the same library in the same program.
-- ⚡ You can use incompatible libraries in the same project, as well as libraries with incompatible/conflicting dependencies.
-- ⚡ It's easy to share written scripts. The script file becomes self-sufficient - the user does not need to install the necessary libraries.
-- ⚡ The library does not leave behind "garbage". After the end of the program, no additional files remain in the system.
+&nbsp;&nbsp;&nbsp;⚡ You can use 2 different versions of the same library in the same program.
+&nbsp;&nbsp;&nbsp;⚡ You can use incompatible libraries in the same project, as well as libraries with incompatible/conflicting dependencies.
+&nbsp;&nbsp;&nbsp;⚡ It's easy to share written scripts. The script file becomes self-sufficient - the user does not need to install the necessary libraries.
+&nbsp;&nbsp;&nbsp;⚡ The library does not leave behind "garbage". After the end of the program, no additional files remain in the system.
 
 
 ## Table of contents
@@ -103,7 +103,7 @@ with installed('flask==2.0.2') as context_1:
         print(flask_2.__version__)  # 2.0.0
 ```
 
-> Keep in mind that although inter-thread isolation is used inside the library, working with contexts is not completely thread-safe. You can write code in such a way that two different contexts import different modules in separate threads at the same time. In this case, you may get paradoxical results. Therefore, it is recommended to additionally isolate with mutexes all cases where you import something from contexts in different threads.
+> ⚠️ Keep in mind that although inter-thread isolation is used inside the library, working with contexts is not completely thread-safe. You can write code in such a way that two different contexts import different modules in separate threads at the same time. In this case, you may get paradoxical results. Therefore, it is recommended to additionally isolate with mutexes all cases where you import something from contexts in different threads.
 
 
 ## Options

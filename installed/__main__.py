@@ -7,8 +7,6 @@ from tempfile import TemporaryDirectory
 import installed
 
 
-
-
 def start():
     with installed() as context:
         old_import = builtins.__import__
@@ -42,8 +40,6 @@ def start():
     module = importlib.util.module_from_spec(spec)
     sys.modules['__main__'] = module
     spec.loader.exec_module(module)
-
-
 
 
 if __name__ == "__main__":

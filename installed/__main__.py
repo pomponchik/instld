@@ -11,7 +11,6 @@ import installed
 
 def start():
     with installed() as context:
-
         old_import = builtins.__import__
 
         @contextmanager
@@ -22,13 +21,12 @@ def start():
 
         def import_wrapper(name, *args, **kwargs):
             with set_import():
-                if True:
                 try:
                     result = __import__(name, *args, **kwargs)
                 except (ModuleNotFoundError, ImportError):
-                        context.install(name.split('.')[0])
-                        result = context.import_here(name.split('.')[0])
-                        sys.modules[name.split('.')[0]] = result
+                    context.install(name.split('.')[0])
+                    result = context.import_here(name.split('.')[0])
+                    sys.modules[name.split('.')[0]] = result
 
                 if 'fromlist' in kwargs and kwargs['fromlist']:
                     if len(name.split('.')) > 1:

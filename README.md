@@ -1,4 +1,4 @@
-![logo](/docs/assets/logo5.png)
+![logo](https://github.com/pomponchik/instld/blob/main/docs/assets/logo5.png)
 
 # INSTLD: the simplest package management in runtime
 

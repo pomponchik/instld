@@ -17,6 +17,11 @@ setup(
     url="https://github.com/pomponchik/instld",
     packages=find_packages(exclude=["tests"]),
     install_requires=requirements,
+    entry_points = {
+        'console_scripts': [
+            'instld = installed.__main__:start'
+        ]
+    },
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

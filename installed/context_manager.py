@@ -34,8 +34,14 @@ def search_path(base_dir, logger, runner):
         del sys.path[sys.path.index(sys_path)]
 
 @contextmanager
-def pip_context(packages_names, options, logger, runner, catch_output):
-    with tempfile.TemporaryDirectory() as directory:
+def pip_context(packages_names, options, logger, runner, catch_output, where):
+    if where is not None:
+        @contextmanager
+        def create_temp_directory():
+            yield where
+    else:
+        create_temp_directory = tempfile.TemporaryDirectory
+    with create_temp_directory() as directory:
         with search_path(directory, logger, runner) as where:
             outputs = []
             try:
@@ -54,4 +60,4 @@ def pip_context(packages_names, options, logger, runner, catch_output):
                     new_error.stderr = ''
                 raise new_error from e
 
-            yield Context(where, logger)
+            yield Context(where, logger, runner, catch_output, options)

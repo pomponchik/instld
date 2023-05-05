@@ -39,8 +39,11 @@ def pip_context(packages_names, options, logger, runner, catch_output):
         with search_path(directory, logger, runner) as where:
             outputs = []
             try:
-                for package_name in packages_names:
-                    runner(['-m', 'pip', 'install', f'--target={where}', *options, package_name], logger, catch_output, outputs)
+                if '-r' in options or '--requirement' in options:
+                    runner(['-m', 'pip', 'install', f'--target={where}', *options], logger, catch_output, outputs)
+                else:
+                    for package_name in packages_names:
+                        runner(['-m', 'pip', 'install', f'--target={where}', *options, package_name], logger, catch_output, outputs)
             except subprocess.CalledProcessError as e:
                 new_error = InstallingPackageError()
                 if len(outputs) == 2:

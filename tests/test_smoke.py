@@ -98,7 +98,6 @@ def test_super_project_nested():
                 assert module_3.version == '0.0.1'
 
 
-
 def test_catch_output_default():
     with redirect_stdout(StringIO()) as context:
         with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/'):
@@ -121,3 +120,9 @@ def test_catch_output_true():
             pass
 
     assert len(context.getvalue()) == 0
+
+
+def test_install_from_requirements_file():
+    with installed(index_url='https://test.pypi.org/simple/', r='tests/requirements_test.txt') as context:
+        module = context.import_here('super_test')
+        assert module.version == '0.0.1'

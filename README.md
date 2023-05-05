@@ -41,7 +41,7 @@ And use as in this example:
 import installed
 
 
-with installed('some_package') as context:
+with installed('some_package'):
     import some_module
 ```
 

@@ -1,6 +1,6 @@
 import sys
 import builtins
-import importlib.util
+import importlib
 from contextlib import contextmanager
 from tempfile import TemporaryDirectory
 from threading import Lock
@@ -20,20 +20,28 @@ def start():
             builtins.__import__ = import_wrapper
 
         def import_wrapper(name, *args, **kwargs):
+            splitted_name = name.split('.')
+            base_name = splitted_name[0]
+            base_sequence = '.'.join(splitted_name[:-1])
+            last_name = splitted_name[-1]
+
             with lock:
                 with set_import():
                     try:
                         result = __import__(name, *args, **kwargs)
                     except (ModuleNotFoundError, ImportError):
-                        context.install(name.split('.')[0])
-                        result = context.import_here(name.split('.')[0])
-                        sys.modules[name.split('.')[0]] = result
+                        context.install(base_name)
+                        result = context.import_here(base_name)
+                        sys.modules[base_name] = result
 
                     if 'fromlist' in kwargs and kwargs['fromlist']:
-                        if len(name.split('.')) > 1:
-                            for index, subname in enumerate(name.split('.')):
+                        if len(splitted_name) > 1:
+                            for index, subname in enumerate(splitted_name):
                                 if index:
-                                    result = getattr(result, subname)
+                                    try:
+                                        result = getattr(result, subname)
+                                    except AttributeError:
+                                        raise ImportError(f"cannot import name '{last_name}' from '{base_sequence}'")
 
                     return result
 

@@ -8,7 +8,7 @@ requirements = []
 
 setup(
     name="instld",
-    version="0.0.13",
+    version="0.0.14",
     author="Evgeniy Blinov",
     author_email="zheni-b@yandex.ru",
     description="The simplest package management in runtime",
@@ -17,6 +17,11 @@ setup(
     url="https://github.com/pomponchik/instld",
     packages=find_packages(exclude=["tests"]),
     install_requires=requirements,
+    entry_points = {
+        'console_scripts': [
+            'instld = installed.__main__:start'
+        ]
+    },
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

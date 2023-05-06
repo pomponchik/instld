@@ -3,12 +3,14 @@ import builtins
 import importlib.util
 from contextlib import contextmanager
 from tempfile import TemporaryDirectory
+from threading import Lock
 
 import installed
 
 
 def start():
     with installed() as context:
+        lock = Lock()
         old_import = builtins.__import__
 
         @contextmanager
@@ -18,21 +20,22 @@ def start():
             builtins.__import__ = import_wrapper
 
         def import_wrapper(name, *args, **kwargs):
-            with set_import():
-                try:
-                    result = __import__(name, *args, **kwargs)
-                except (ModuleNotFoundError, ImportError):
-                    context.install(name.split('.')[0])
-                    result = context.import_here(name.split('.')[0])
-                    sys.modules[name.split('.')[0]] = result
+            with lock:
+                with set_import():
+                    try:
+                        result = __import__(name, *args, **kwargs)
+                    except (ModuleNotFoundError, ImportError):
+                        context.install(name.split('.')[0])
+                        result = context.import_here(name.split('.')[0])
+                        sys.modules[name.split('.')[0]] = result
 
-                if 'fromlist' in kwargs and kwargs['fromlist']:
-                    if len(name.split('.')) > 1:
-                        for index, subname in enumerate(name.split('.')):
-                            if index:
-                                result = getattr(result, subname)
+                    if 'fromlist' in kwargs and kwargs['fromlist']:
+                        if len(name.split('.')) > 1:
+                            for index, subname in enumerate(name.split('.')):
+                                if index:
+                                    result = getattr(result, subname)
 
-                return result
+                    return result
 
     builtins.__import__ = import_wrapper
 

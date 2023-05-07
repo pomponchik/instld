@@ -1,8 +1,8 @@
-def get_comment_string(frame):
-    line_number = frame.f_lineno
-    code = frame.f_code
-    file_name = code.co_filename
+from functools import lru_cache
 
+
+@lru_cache
+def get_comment_string_from_file(line_number, file_name):
     try:
         with open(file_name, 'r') as file:
             for index, line in enumerate(file):
@@ -19,3 +19,10 @@ def get_comment_string(frame):
 
     except FileNotFoundError:
         return None
+
+def get_comment_string(frame):
+    line_number = frame.f_lineno
+    code = frame.f_code
+    file_name = code.co_filename
+
+    return get_comment_string_from_file(line_number, file_name)

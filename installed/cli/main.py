@@ -8,37 +8,14 @@ from tempfile import TemporaryDirectory
 from threading import Lock
 
 import installed
-from installed.errors import InstallingPackageError
-from installed.cli.get_comment_string import get_comment_string
+from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
 
-
-def get_options_from_comments(frame):
-    frame = frame.f_back
-    comment_string = get_comment_string(frame)
-
-    result = {}
-
-    if comment_string is not None:
-        options = (x.strip() for x in comment_string.split(','))
-        options = (x for x in options if x)
-
-        for option in options:
-            splitted_option = [x for x in option.split() if x]
-
-            if len(splitted_option) != 2:
-                raise InstallingPackageError()
-
-            option_name = splitted_option[0].strip().lower()
-            option_value = splitted_option[1].strip().lower()
-            result[option_name] = option_value
-
-    return result
 
 def start():
     parser = argparse.ArgumentParser(description='Running a script with automatic installation of dependencies.')
     parser.add_argument('python_file', type=str, help='The path to the file with the extension ".py" containing Python code.')
     arguments = parser.parse_args()
-    
+
     with installed() as context:
         lock = Lock()
         old_import = builtins.__import__
@@ -59,12 +36,12 @@ def start():
             options = get_options_from_comments(current_frame)
 
             if 'package' in options:
-                package_name = options['package']
+                package_name = options.pop('package')
             else:
                 package_name = base_name
 
             if 'version' in options:
-                package_name = f'{package_name}=={options["version"]}'
+                package_name = f'{package_name}=={options.pop("version")}'
 
             with lock:
                 with set_import():

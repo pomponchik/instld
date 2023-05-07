@@ -19,7 +19,7 @@ setup(
     install_requires=requirements,
     entry_points = {
         'console_scripts': [
-            'instld = installed.__main__:start'
+            'instld = installed.cli.main:start'
         ]
     },
     classifiers=[

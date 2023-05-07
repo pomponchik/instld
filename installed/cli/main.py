@@ -2,6 +2,7 @@ import sys
 import builtins
 import importlib
 import inspect
+import argparse
 from contextlib import contextmanager
 from tempfile import TemporaryDirectory
 from threading import Lock
@@ -83,7 +84,11 @@ def start():
 
     builtins.__import__ = import_wrapper
 
-    spec = importlib.util.spec_from_file_location('kek', sys.argv[1])
+    parser = argparse.ArgumentParser(description='Running a script with automatic installation of dependencies.')
+    parser.add_argument('python_file', type=str, help='The path to the file with the extension ".py" containing Python code.')
+    arguments = parser.parse_args()
+
+    spec = importlib.util.spec_from_file_location('kek', arguments.python_file)
     module = importlib.util.module_from_spec(spec)
     sys.modules['__main__'] = module
     spec.loader.exec_module(module)

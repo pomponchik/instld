@@ -1,5 +1,7 @@
 from functools import lru_cache
 
+from installed.errors import InstallingPackageError
+
 
 @lru_cache
 def get_comment_string_from_file(line_number, file_name):
@@ -15,6 +17,8 @@ def get_comment_string_from_file(line_number, file_name):
                         right_part = right_part[7:].strip()
                         if right_part:
                             return right_part
+                        else:
+                            raise InstallingPackageError('An empty list of options in the comment.')
                     break
 
     except FileNotFoundError:

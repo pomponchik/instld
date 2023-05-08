@@ -33,7 +33,7 @@ def start():
             last_name = splitted_name[-1]
 
             current_frame = inspect.currentframe()
-            options = get_options_from_comments(current_frame)
+            options = get_options_from_comments(current_frame.f_back)
 
             if 'package' in options:
                 package_name = options.pop('package')

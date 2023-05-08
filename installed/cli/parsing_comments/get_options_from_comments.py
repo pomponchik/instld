@@ -3,7 +3,6 @@ from installed.cli.parsing_comments.get_comment_string import get_comment_string
 
 
 def get_options_from_comments(frame):
-    frame = frame.f_back
     comment_string = get_comment_string(frame)
 
     result = {}

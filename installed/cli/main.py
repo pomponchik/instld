@@ -2,19 +2,17 @@ import sys
 import builtins
 import importlib
 import inspect
-import argparse
 from contextlib import contextmanager
 from tempfile import TemporaryDirectory
 from threading import Lock
 
 import installed
 from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from installed.cli.parsing_arguments.get_arguments import get_arguments
 
 
 def start():
-    parser = argparse.ArgumentParser(description='Running a script with automatic installation of dependencies.')
-    parser.add_argument('python_file', type=str, help='The path to the file with the extension ".py" containing Python code.')
-    arguments = parser.parse_args()
+    arguments = get_arguments()
 
     with installed() as context:
         lock = Lock()

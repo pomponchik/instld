@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import subprocess
+from functools import partial
 
 from io import StringIO
 from contextlib import contextmanager
@@ -60,4 +61,4 @@ def pip_context(packages_names, options, logger, runner, catch_output, where):
                     new_error.stderr = ''
                 raise new_error from e
 
-            yield Context(where, logger, runner, catch_output, options)
+            yield Context(where, logger, catch_output, options, partial(pip_context, logger=logger, runner=runner, catch_output=catch_output, where=where))

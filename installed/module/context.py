@@ -9,12 +9,12 @@ from installed.module.lock import lock
 class Context:
     original_path = copy.copy(sys.path)
 
-    def __init__(self, where, logger, runner, catch_output, options):
+    def __init__(self, where, logger, catch_output, options, installer):
         self.where = where
         self.logger = logger
-        self.runner = runner
         self.catch_output = catch_output
         self.options = options
+        self.installer = installer
 
     def __str__(self):
         return f'<Context with path "{self.where}">'
@@ -41,5 +41,5 @@ class Context:
         yield
         sys.path = old_path
 
-    def install(self, package_name):
-        self.runner(['-m', 'pip', 'install', f'--target={self.where}', *(self.options), package_name], self.logger, self.catch_output, [])
+    def install(self, package_name, **options):
+        self.installer(package_name, options=options)

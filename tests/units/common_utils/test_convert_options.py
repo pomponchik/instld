@@ -1,6 +1,6 @@
 import pytest
 
-from installed.utils.convert_options import convert_options
+from installed.common_utils.convert_options import convert_options
 
 
 def test_convert_options():

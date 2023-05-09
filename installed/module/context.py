@@ -3,7 +3,7 @@ import importlib
 from contextlib import contextmanager
 import copy
 
-from installed.lock import lock
+from installed.module.lock import lock
 
 
 class Context:

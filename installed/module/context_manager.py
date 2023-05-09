@@ -7,9 +7,9 @@ from io import StringIO
 from contextlib import contextmanager
 
 from installed.errors import InstallingPackageError
-from installed.context import Context
-from installed.runner import run_python as standard_runner
-from installed.lock import lock
+from installed.module.context import Context
+from installed.module.runner import run_python as standard_runner
+from installed.module.lock import lock
 
 
 @contextmanager

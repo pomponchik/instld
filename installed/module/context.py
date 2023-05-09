@@ -4,6 +4,7 @@ from contextlib import contextmanager
 import copy
 
 from installed.module.lock import lock
+from installed.common_utils.convert_options import convert_options
 
 
 class Context:
@@ -41,5 +42,10 @@ class Context:
         yield
         sys.path = old_path
 
-    def install(self, package_name, **options):
-        self.installer(package_name, options=options)
+    def install(self, *package_names, **options):
+        if not package_names:
+            raise ValueError('You need to pass at least one package name.')
+
+        options = convert_options(options)
+        with self.installer(package_names, options=options):
+            pass

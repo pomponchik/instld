@@ -61,4 +61,4 @@ def pip_context(packages_names, options, logger, runner, catch_output, where):
                     new_error.stderr = ''
                 raise new_error from e
 
-            yield Context(where, logger, catch_output, options, partial(pip_context, logger=logger, runner=runner, catch_output=catch_output, where=where))
+            yield Context(where, logger, catch_output, options, partial(pip_context, logger=logger, runner=runner, catch_output=catch_output, where=directory))

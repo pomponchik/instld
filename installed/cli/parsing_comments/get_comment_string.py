@@ -3,7 +3,7 @@ from functools import lru_cache
 from installed.errors import InstallingPackageError
 
 
-@lru_cache
+@lru_cache()
 def get_comment_string_from_file(line_number, file_name):
     try:
         with open(file_name, 'r') as file:

@@ -21,7 +21,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
 
 - [**Quick start**](#quick-start)
 - [**Script launch mode**](#script-launch-mode)
-- [**Context manager mode**](#сontext-manager-mode)
+- [**Context manager mode**](#context-manager-mode)
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
   - [**Output and logging**](#output-and-logging)

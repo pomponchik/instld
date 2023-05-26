@@ -36,7 +36,7 @@ Install [it](https://pypi.org/project/instld/):
 pip install instld
 ```
 
-You can use the library in two ways: by running your script through it or by importing a context manager from there.
+And use the library in one of two ways: by running your script through it or by importing a context manager from there.
 
 If you run the script [like this](#script-launch-mode), all dependencies will be automatically installed when the application starts and deleted when it stops:
 
@@ -44,7 +44,7 @@ If you run the script [like this](#script-launch-mode), all dependencies will be
 instld script.py
 ```
 
-And an example of a [context manager](#сontext-manager-mode):
+You can also call the [context manager](#сontext-manager-mode) from your code:
 
 ```python
 import installed

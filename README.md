@@ -98,7 +98,7 @@ The library provides isolation of various contexts among themselves, so in the s
 > ⚠️  Some modules use lazy imports. If such an import happens after exiting the context manager, it will break your program. Please make sure that all the internal components of the libraries used have been initialized before the execution of your code goes out of context.
 
 
-## Installing multiple packages
+### Installing multiple packages
 
 You can install several packages by specifying their names separated by commas:
 
@@ -139,7 +139,7 @@ with installed('flask==2.0.2') as context_1:
 > ⚠️  Keep in mind that although inter-thread isolation is used inside the library, working with contexts is not completely thread-safe. You can write code in such a way that two different contexts import different modules in separate threads at the same time. In this case, you may get paradoxical results. Therefore, it is recommended to additionally isolate with mutexes all cases where you import something from contexts in different threads.
 
 
-## Options
+### Options
 
 You can use [any options](https://pip.pypa.io/en/stable/cli/pip_install/) available for `pip`. To do this, you need to slightly change the name of the option, replacing the hyphens with underscores, and pass it as an argument to `installed`. Here is an example of how using the `--index-url` option will look like:
 
@@ -151,7 +151,7 @@ with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/sim
 You cannot use options that tell `pip` where to install libraries.
 
 
-## Output and logging
+### Output and logging
 
 By default, you can see the output of the installation progress in the console:
 

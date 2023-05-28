@@ -21,6 +21,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
 
 - [**Quick start**](#quick-start)
 - [**Script launch mode**](#script-launch-mode)
+  - [**Special comment language**](#special-comment-language)
 - [**Context manager mode**](#context-manager-mode)
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
@@ -75,6 +76,11 @@ print(f('some string'))
 ```
 
 You can also specify only the version or only the package name in the comment, they do not have to be specified together.
+
+
+### Special comment language
+
+
 
 
 ## Context manager mode

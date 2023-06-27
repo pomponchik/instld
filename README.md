@@ -26,7 +26,6 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
   - [**Output and logging**](#output-and-logging)
-- [**Interaction with venv**](#interaction-with-venv)
 - [**How does it work?**](#how-does-it-work)
 
 

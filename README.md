@@ -26,6 +26,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
   - [**Output and logging**](#output-and-logging)
+- [**Interaction with venv**](#interaction-with-venv)
 - [**How does it work?**](#how-does-it-work)
 
 
@@ -67,7 +68,12 @@ instld script.py
 
 The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
 
-If the name of the imported module and the package name are different, you need to use a special explanatory comment. For example, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
+
+### Special comment language
+
+When using script launch mode, you can specify additional parameters for each import inside your program. To do this, you need to write immediately after it (but always in the same line!) a comment that starts with "instld:", separating key and value pairs with commas.
+
+As example, if the name of the imported module and the package name are different, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
 
 ```python
 import f # instld: version 0.0.3, package fazy
@@ -76,11 +82,6 @@ print(f('some string'))
 ```
 
 You can also specify only the version or only the package name in the comment, they do not have to be specified together.
-
-
-### Special comment language
-
-
 
 
 ## Context manager mode

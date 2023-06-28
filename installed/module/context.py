@@ -3,18 +3,19 @@ import importlib
 from contextlib import contextmanager
 import copy
 
-from installed.lock import lock
+from installed.module.lock import lock
+from installed.common_utils.convert_options import convert_options
 
 
 class Context:
     original_path = copy.copy(sys.path)
 
-    def __init__(self, where, logger, runner, catch_output, options):
+    def __init__(self, where, logger, catch_output, options, installer):
         self.where = where
         self.logger = logger
-        self.runner = runner
         self.catch_output = catch_output
         self.options = options
+        self.installer = installer
 
     def __str__(self):
         return f'<Context with path "{self.where}">'
@@ -41,5 +42,10 @@ class Context:
         yield
         sys.path = old_path
 
-    def install(self, package_name):
-        self.runner(['-m', 'pip', 'install', f'--target={self.where}', *(self.options), package_name], self.logger, self.catch_output, [])
+    def install(self, *package_names, **options):
+        if not package_names:
+            raise ValueError('You need to pass at least one package name.')
+
+        options = convert_options(options)
+        with self.installer(package_names, options=options):
+            pass

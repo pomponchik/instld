@@ -20,11 +20,12 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
 ## Table of contents
 
 - [**Quick start**](#quick-start)
-- [**Context manager and imports**](#сontext-manager-and-imports)
-- [**Installing multiple packages**](#installing-multiple-packages)
-- [**Options**](#options)
-- [**Output and logging**](#output-and-logging)
 - [**Script launch mode**](#script-launch-mode)
+  - [**Special comment language**](#special-comment-language)
+- [**Context manager mode**](#context-manager-mode)
+  - [**Installing multiple packages**](#installing-multiple-packages)
+  - [**Options**](#options)
+  - [**Output and logging**](#output-and-logging)
 - [**How does it work?**](#how-does-it-work)
 
 
@@ -36,7 +37,15 @@ Install [it](https://pypi.org/project/instld/):
 pip install instld
 ```
 
-You can use the library in two ways: by importing a context manager from there or by running your script through it. Example of a context manager:
+And use the library in one of two ways: by running your script through it or by importing a context manager from there.
+
+If you run the script [like this](#script-launch-mode), all dependencies will be automatically installed when the application starts and deleted when it stops:
+
+```bash
+instld script.py
+```
+
+You can also call the [context manager](#сontext-manager-mode) from your code:
 
 ```python
 import installed
@@ -45,10 +54,36 @@ with installed('some_package'):
     import some_module
 ```
 
-The above code downloads `some_package` and imports `some_module` from it. Read on about how [running the script](#script-launch-mode) via `instld` works.
+Read more about each method, its capabilities and limitations below.
 
 
-## Context manager and imports
+## Script launch mode
+
+You can use `instld` to run your script. To do this, you need to run a command like this in the console:
+
+```bash
+instld script.py
+```
+
+The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
+
+
+### Special comment language
+
+When using script launch mode, you can specify additional parameters for each import inside your program. To do this, you need to write immediately after it (but always in the same line!) a comment that starts with "instld:", separating key and value pairs with commas.
+
+As example, if the name of the imported module and the package name are different, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
+
+```python
+import f # instld: version 0.0.3, package fazy
+
+print(f('some string'))
+```
+
+You can also specify only the version or only the package name in the comment, they do not have to be specified together.
+
+
+## Context manager mode
 
 The context manager `installed` generates a context. While you are inside the context manager, you can import modules using the usual `import` command:
 
@@ -69,7 +104,7 @@ The library provides isolation of various contexts among themselves, so in the s
 > ⚠️  Some modules use lazy imports. If such an import happens after exiting the context manager, it will break your program. Please make sure that all the internal components of the libraries used have been initialized before the execution of your code goes out of context.
 
 
-## Installing multiple packages
+### Installing multiple packages
 
 You can install several packages by specifying their names separated by commas:
 
@@ -110,7 +145,7 @@ with installed('flask==2.0.2') as context_1:
 > ⚠️  Keep in mind that although inter-thread isolation is used inside the library, working with contexts is not completely thread-safe. You can write code in such a way that two different contexts import different modules in separate threads at the same time. In this case, you may get paradoxical results. Therefore, it is recommended to additionally isolate with mutexes all cases where you import something from contexts in different threads.
 
 
-## Options
+### Options
 
 You can use [any options](https://pip.pypa.io/en/stable/cli/pip_install/) available for `pip`. To do this, you need to slightly change the name of the option, replacing the hyphens with underscores, and pass it as an argument to `installed`. Here is an example of how using the `--index-url` option will look like:
 
@@ -122,7 +157,7 @@ with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/sim
 You cannot use options that tell `pip` where to install libraries.
 
 
-## Output and logging
+### Output and logging
 
 By default, you can see the output of the installation progress in the console:
 
@@ -203,26 +238,6 @@ with installed('flask', catch_output=True):
 ```
 
 The `INFO` [level](https://docs.python.org/3/library/logging.html#logging-levels) is used by default. For errors - `ERROR`.
-
-## Script launch mode
-
-You can use `instld` to run your script. To do this, you need to run a command like this in the console:
-
-```bash
-instld script.py
-```
-
-The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
-
-If the name of the imported module and the package name are different, you need to use a special explanatory comment. For example, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
-
-```python
-import f # instld: version 0.0.3, package fazy
-
-print(f('some string'))
-```
-
-You can also specify only the version or only the package name in the comment, they do not have to be specified together.
 
 
 ## How does it work?

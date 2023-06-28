@@ -8,7 +8,7 @@ requirements = []
 
 setup(
     name="instld",
-    version="0.0.14",
+    version="0.0.15",
     author="Evgeniy Blinov",
     author_email="zheni-b@yandex.ru",
     description="The simplest package management in runtime",
@@ -19,7 +19,7 @@ setup(
     install_requires=requirements,
     entry_points = {
         'console_scripts': [
-            'instld = installed.__main__:start'
+            'instld = installed.cli.main:start'
         ]
     },
     classifiers=[

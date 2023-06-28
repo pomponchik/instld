@@ -7,55 +7,13 @@ from tempfile import TemporaryDirectory
 from threading import Lock
 
 import installed
-from installed.errors import InstallingPackageError
+from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from installed.cli.parsing_arguments.get_arguments import get_arguments
 
-
-def get_comment_string(frame):
-    line_number = frame.f_lineno
-    code = frame.f_code
-    file_name = code.co_filename
-
-    try:
-        with open(file_name, 'r') as file:
-            for index, line in enumerate(file):
-                if index + 1 == line_number:
-                    splitted_line = line.split('#')
-                    right_part = splitted_line[1:]
-                    right_part = '#'.join(right_part)
-                    right_part = right_part.strip()
-                    if right_part.startswith('instld:'):
-                        right_part = right_part[7:].strip()
-                        if right_part:
-                            return right_part
-                    break
-
-    except FileNotFoundError:
-        return None
-
-
-def get_options_from_comments(frame):
-    frame = frame.f_back
-    comment_string = get_comment_string(frame)
-
-    result = {}
-
-    if comment_string is not None:
-        options = (x.strip() for x in comment_string.split(','))
-        options = (x for x in options if x)
-
-        for option in options:
-            splitted_option = [x for x in option.split() if x]
-
-            if len(splitted_option) != 2:
-                raise InstallingPackageError()
-
-            option_name = splitted_option[0].strip().lower()
-            option_value = splitted_option[1].strip().lower()
-            result[option_name] = option_value
-
-    return result
 
 def start():
+    arguments = get_arguments()
+
     with installed() as context:
         lock = Lock()
         old_import = builtins.__import__
@@ -73,15 +31,15 @@ def start():
             last_name = splitted_name[-1]
 
             current_frame = inspect.currentframe()
-            options = get_options_from_comments(current_frame)
+            options = get_options_from_comments(current_frame.f_back)
 
             if 'package' in options:
-                package_name = options['package']
+                package_name = options.pop('package')
             else:
                 package_name = base_name
 
             if 'version' in options:
-                package_name = f'{package_name}=={options["version"]}'
+                package_name = f'{package_name}=={options.pop("version")}'
 
             with lock:
                 with set_import():
@@ -105,7 +63,7 @@ def start():
 
     builtins.__import__ = import_wrapper
 
-    spec = importlib.util.spec_from_file_location('kek', sys.argv[1])
+    spec = importlib.util.spec_from_file_location('kek', arguments.python_file)
     module = importlib.util.module_from_spec(spec)
     sys.modules['__main__'] = module
     spec.loader.exec_module(module)

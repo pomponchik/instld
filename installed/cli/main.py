@@ -33,13 +33,14 @@ def start():
             current_frame = inspect.currentframe()
             options = get_options_from_comments(current_frame.f_back)
 
-            if 'package' in options:
-                package_name = options.pop('package')
-            else:
-                package_name = base_name
+            package_name = options.pop('package', base_name)
 
             if 'version' in options:
                 package_name = f'{package_name}=={options.pop("version")}'
+
+            where = options.pop('venv', None)
+
+            current_context = context if where is None else installed(where=where)
 
             with lock:
                 with set_import():

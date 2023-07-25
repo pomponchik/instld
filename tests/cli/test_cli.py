@@ -5,8 +5,8 @@ import shutil
 
 def test_cli_where():
     strings = [
-        f'import is_odd  # instld: where {os.path.join("tests", "cli", "data", "pok")}',
-        f'import is_even  # instld: where {os.path.join("tests", "cli", "data", "chpok")}',
+        rf'import is_odd  # instld: where {os.path.join("tests", "cli", "data", "pok")}',
+        rf'import is_even  # instld: where {os.path.join("tests", "cli", "data", "chpok")}',
         'assert is_odd.valid(23)',
         'assert is_even.isEven(1)',
     ]

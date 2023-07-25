@@ -17,6 +17,8 @@ def test_cli_where():
 
     result = subprocess.run(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
+    print(result.stdout.decode('utf-8'))
+    print(result.stderr.decode('utf-8'))
     result.check_returncode()
 
     base_libs_paths = {

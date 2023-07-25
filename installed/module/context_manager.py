@@ -15,10 +15,9 @@ from installed.module.lock import lock
 
 @contextmanager
 def search_path(base_dir, logger, runner):
-    path_to_venv = os.path.join(base_dir, 'venv')
-    sys_path = os.path.join(path_to_venv, 'lib')
+    sys_path = os.path.join(base_dir, 'lib')
 
-    standard_runner(['-m', 'venv', path_to_venv], logger, True, [])
+    standard_runner(['-m', 'venv', base_dir], logger, True, [])
 
     for maybe_directory in os.listdir(path=sys_path):
         maybe_directory_full = os.path.join(sys_path, maybe_directory)

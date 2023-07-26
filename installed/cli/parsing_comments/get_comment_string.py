@@ -6,8 +6,6 @@ from installed.errors import InstallingPackageError
 @lru_cache()
 def get_comment_string_from_file(line_number, file_name):
     try:
-        print('file name:', file_name)
-        print(type(file_name))
         with open(file_name, 'r') as file:
             for index, line in enumerate(file):
                 if index + 1 == line_number:

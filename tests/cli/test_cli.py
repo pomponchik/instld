@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import shutil
 
@@ -28,14 +29,16 @@ def test_cli_where():
         os.path.join('tests', 'cli', 'data', 'chpok'): 'is_even',
     }
 
-    for path in base_libs_paths:
+    for path, library_name in base_libs_paths.items():
         full_path_to_the_lib = os.path.join(path, 'lib')
-        print('basename:', os.path.basename(os.listdir(path=full_path_to_the_lib)[0]))
-        print('listdir:', os.listdir(path=full_path_to_the_lib))
-        import sys
-        print('sys.platform:', sys.platform)
-        full_path_to_the_lib = os.path.join(full_path_to_the_lib, os.path.basename(os.listdir(path=full_path_to_the_lib)[0]), 'site-packages')
-        full_path_to_the_lib = os.path.join(full_path_to_the_lib, base_libs_paths[path])
+        print(sys.platform, sys.platform.lower())
+        if sys.platform.lower() not in ('win32',):
+            print('NOT WIN!')
+            full_path_to_the_lib = os.path.join(full_path_to_the_lib, os.path.basename(os.listdir(path=full_path_to_the_lib)[0]), 'site-packages')
+        else:
+            print('ELSE')
+            full_path_to_the_lib = os.path.join(full_path_to_the_lib, 'site-packages')
+        full_path_to_the_lib = os.path.join(full_path_to_the_lib, library_name)
 
         print('full_path_to_the_lib:', full_path_to_the_lib)
 

@@ -60,7 +60,7 @@ def start():
                 with set_import():
                     try:
                         result = __import__(name, *args, **kwargs)
-                    except (ModuleNotFoundError, ImportError):
+                    except (ModuleNotFoundError, ImportError) as e:
                         current_context.install(package_name)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result

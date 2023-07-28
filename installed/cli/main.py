@@ -26,6 +26,7 @@ def start():
             builtins.__import__ = import_wrapper
 
         def get_current_context(where):
+            print('KEK LOL 1')
             if where is None:
                 return context
 
@@ -41,6 +42,7 @@ def start():
                     return local_context
 
         def import_wrapper(name, *args, **kwargs):
+            print('KEK 1')
             splitted_name = name.split('.')
             base_name = splitted_name[0]
             base_sequence = '.'.join(splitted_name[:-1])
@@ -56,15 +58,22 @@ def start():
 
             current_context = get_current_context(options.pop('where', None))
 
+            print('KEK 2')
             with lock:
+                print('KEK 3')
                 with set_import():
+                    print('KEK 4')
                     try:
+                        print('KEK 5')
                         result = __import__(name, *args, **kwargs)
+                        print('KEK 6')
                     except (ModuleNotFoundError, ImportError) as e:
+                        print('KEK 7')
                         current_context.install(package_name)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result
 
+                    print('KEK 8')
                     if 'fromlist' in kwargs and kwargs['fromlist']:
                         if len(splitted_name) > 1:
                             for index, subname in enumerate(splitted_name):
@@ -74,6 +83,7 @@ def start():
                                     except AttributeError:
                                         raise ImportError(f"cannot import name '{last_name}' from '{base_sequence}'")
 
+                    print('KEK 9')
                     return result
 
     builtins.__import__ = import_wrapper

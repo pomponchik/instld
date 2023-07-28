@@ -96,15 +96,15 @@ source venv/bin/activate
 instld script.py
 ```
 
-When the `import` command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there.
+When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there.
 
-Secondly, you can specify the path to the virtual environment directly in the comments to a specific import using the `where` directive:
+Secondly, you can specify the path to the virtual environment directly [in the comments](#special-comment-language) to a specific import using the `where` directive:
 
 ```python
 import something  # instld: where path/to/the/venv
 ```
 
-If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped.
+If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped, therefore, starting from the second launch, the download is no longer required.
 
 Note that the path to the virtual environment in this case should not contain spaces.
 

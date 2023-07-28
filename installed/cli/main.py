@@ -13,6 +13,11 @@ from installed.cli.parsing_arguments.get_arguments import get_arguments
 
 def start():
     arguments = get_arguments()
+    def print(text):
+        import os
+
+        with open(os.path.join("tests", "cli", "data", "test.log"), 'a') as file:
+            file.write(text)
 
     with installed() as context:
         lock = Lock()

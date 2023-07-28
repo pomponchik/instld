@@ -38,7 +38,7 @@ def test_cli_where():
         else:
             print('ELSE')
             print('listdir 0:', os.listdir(path=full_path_to_the_lib))
-            full_path_to_the_lib = os.path.join(full_path_to_the_lib, 'site-packages')
+            #full_path_to_the_lib = os.path.join(full_path_to_the_lib, 'site-packages')
         print('path!:', full_path_to_the_lib)
         print('listdir 1:', os.listdir(path=full_path_to_the_lib))
         full_path_to_the_lib = os.path.join(full_path_to_the_lib, library_name)

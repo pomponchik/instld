@@ -22,6 +22,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
 - [**Quick start**](#quick-start)
 - [**Script launch mode**](#script-launch-mode)
   - [**Special comment language**](#special-comment-language)
+  - [**Using multiple environments**](#using-multiple-environments)
 - [**Context manager mode**](#context-manager-mode)
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
@@ -81,6 +82,31 @@ print(f('some string'))
 ```
 
 You can also specify only the version or only the package name in the comment, they do not have to be specified together.
+
+
+### Using multiple environments
+
+The instld script launch mode provides a unique opportunity to use multiple virtual environments at the same time.
+
+Firstly, you can run scripts in the main virtual environment, and it will work exactly as you expect:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+instld script.py
+```
+
+When the `import` command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there.
+
+Secondly, you can specify the path to the virtual environment directly in the comments to a specific import using the `where` directive:
+
+```python
+import something  # instld: where path/to/the/venv
+```
+
+If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped.
+
+Note that the path to the virtual environment in this case should not contain spaces.
 
 
 ## Context manager mode

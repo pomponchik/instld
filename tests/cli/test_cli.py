@@ -3,7 +3,10 @@ import sys
 import subprocess
 import shutil
 
+import pytest
 
+
+@pytest.mark.timeout(60)
 def test_cli_where():
     strings = [
         rf'import is_odd  # instld: where {os.path.join("tests", "cli", "data", "pok")}',

@@ -19,7 +19,7 @@ def test_cli_where():
     with open(script, 'w') as file:
         file.write('\n'.join(strings))
 
-    result = subprocess.run(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result = subprocess.run(['instld', script])
 
     result.check_returncode()
 

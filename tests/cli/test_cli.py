@@ -4,17 +4,7 @@ import subprocess
 import shutil
 
 import pytest
-from termcolor import colored
 
-
-@pytest.hookimpl
-def pytest_runtest_makereport(item, call):
-    """
-    Хук, добавляющий информацию о текущих настройках к каждому выводу об ошибке в тесте.
-    """
-    if call.when == 'call':
-        if call.excinfo:
-            item.add_report_section("call", "config", colored(open(os.path.join("tests", "cli", "data", "test.log"), 'r').read(), 'cyan'))
 
 @pytest.mark.timeout(60)
 def test_cli_where():

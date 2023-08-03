@@ -111,7 +111,7 @@ Note that the path to the virtual environment in this case should not contain sp
 
 ## Context manager mode
 
-The context manager `installed` generates a context. While you are inside the context manager, you can import modules using the usual `import` command:
+You can also use `instld` to install and use packages in runtime. The context manager `installed` generates a context. While you are inside the context manager, you can import modules using the usual `import` command:
 
 ```python
 with installed('some_package'):

@@ -1,3 +1,4 @@
+import os
 import sys
 import builtins
 import importlib
@@ -12,8 +13,6 @@ from installed.cli.parsing_arguments.get_arguments import get_arguments
 
 
 def print(text):
-    import os
-
     with open(os.path.join("tests", "cli", "data", "test.log"), 'a') as file:
         file.write(text)
 

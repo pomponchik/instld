@@ -14,7 +14,7 @@ from installed.cli.parsing_arguments.get_arguments import get_arguments
 
 def print(text):
     with open(os.path.join("tests", "cli", "data", "test.log"), 'a') as file:
-        file.write(text)
+        file.write('({text})')
 
 def start():
     arguments = get_arguments()

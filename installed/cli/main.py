@@ -71,9 +71,9 @@ def start():
                     try:
                         print('KEK 5')
                         result = __import__(name, *args, **kwargs)
-                        print('KEK 6')
+                        print(f'KEK 6 {name}')
                     except (ModuleNotFoundError, ImportError) as e:
-                        print('KEK 7')
+                        print(f'KEK 7 {e}')
                         current_context.install(package_name)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result

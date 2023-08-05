@@ -4,7 +4,7 @@ import importlib
 import inspect
 from contextlib import contextmanager
 from tempfile import TemporaryDirectory
-from threading import Lock
+from threading import RLock
 
 import installed
 from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
@@ -15,7 +15,7 @@ def start():
     arguments = get_arguments()
 
     with installed() as context:
-        lock = Lock()
+        lock = RLock()
         old_import = builtins.__import__
         locations = {}
 

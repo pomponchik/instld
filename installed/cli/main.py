@@ -80,12 +80,19 @@ def start():
 
                     print('KEK 8')
                     if 'fromlist' in kwargs and kwargs['fromlist']:
+                        print('KEK 8.1')
                         if len(splitted_name) > 1:
+                            print('KEK 8.2')
                             for index, subname in enumerate(splitted_name):
+                                print('KEK 8.3')
                                 if index:
+                                    print('KEK 8.4')
                                     try:
+                                        print('KEK 8.5')
                                         result = getattr(result, subname)
+                                        print('KEK 8.6')
                                     except AttributeError:
+                                        print('KEK 8.7')
                                         raise ImportError(f"cannot import name '{last_name}' from '{base_sequence}'")
 
                     print('KEK 9')

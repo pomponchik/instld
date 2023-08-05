@@ -47,7 +47,7 @@ def start():
                     return local_context
 
         def import_wrapper(name, *args, **kwargs):
-            print('KEK 1')
+            print(f'KEK 1 {name}')
             splitted_name = name.split('.')
             base_name = splitted_name[0]
             base_sequence = '.'.join(splitted_name[:-1])

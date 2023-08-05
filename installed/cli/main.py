@@ -1,26 +1,21 @@
-import os
 import sys
 import builtins
 import importlib
 import inspect
 from contextlib import contextmanager
 from tempfile import TemporaryDirectory
-from threading import RLock
+from threading import Lock
 
 import installed
 from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
 from installed.cli.parsing_arguments.get_arguments import get_arguments
 
 
-def print(text):
-    with open(os.path.join("tests", "cli", "data", "test.log"), 'a') as file:
-        file.write(f'({text})')
-
 def start():
     arguments = get_arguments()
 
     with installed() as context:
-        lock = RLock()
+        lock = Lock()
         old_import = builtins.__import__
         locations = {}
 
@@ -31,7 +26,6 @@ def start():
             builtins.__import__ = import_wrapper
 
         def get_current_context(where):
-            print('KEK LOL 1')
             if where is None:
                 return context
 
@@ -47,7 +41,6 @@ def start():
                     return local_context
 
         def import_wrapper(name, *args, **kwargs):
-            print(f'KEK 1 {name}')
             splitted_name = name.split('.')
             base_name = splitted_name[0]
             base_sequence = '.'.join(splitted_name[:-1])
@@ -63,39 +56,24 @@ def start():
 
             current_context = get_current_context(options.pop('where', None))
 
-            print('KEK 2')
             with lock:
-                print('KEK 3')
                 with set_import():
-                    print('KEK 4')
                     try:
-                        print('KEK 5')
                         result = __import__(name, *args, **kwargs)
-                        print(f'KEK 6 {name}')
                     except (ModuleNotFoundError, ImportError) as e:
-                        print(f'KEK 7 {e}')
                         current_context.install(package_name)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result
 
-                    print('KEK 8')
                     if 'fromlist' in kwargs and kwargs['fromlist']:
-                        print('KEK 8.1')
                         if len(splitted_name) > 1:
-                            print('KEK 8.2')
                             for index, subname in enumerate(splitted_name):
-                                print('KEK 8.3')
                                 if index:
-                                    print('KEK 8.4')
                                     try:
-                                        print('KEK 8.5')
                                         result = getattr(result, subname)
-                                        print('KEK 8.6')
                                     except AttributeError:
-                                        print('KEK 8.7')
                                         raise ImportError(f"cannot import name '{last_name}' from '{base_sequence}'")
 
-                    print('KEK 9')
                     return result
 
     builtins.__import__ = import_wrapper

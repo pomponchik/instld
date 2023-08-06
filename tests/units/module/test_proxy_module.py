@@ -4,7 +4,7 @@ import installed
 def test_install_with_options():
     calls = []
 
-    def runner(args, logger, catch_output, outputs):
+    def runner(args, logger, catch_output):
         calls.append(args)
 
     with installed('kek_pack', runner=runner, platform='kek', no_deps=True):

@@ -21,7 +21,7 @@ def get_comment_string_from_file(line_number, file_name):
                             raise InstallingPackageError('An empty list of options in the comment.')
                     break
 
-    except FileNotFoundError:
+    except (FileNotFoundError, OSError):
         return None
 
 def get_comment_string(frame):

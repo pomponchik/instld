@@ -7,3 +7,5 @@ dist
 *.egg-info
 test.py
 .coverage
+tests/cli/data/chpok
+tests/cli/data/pok

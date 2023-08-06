@@ -7,7 +7,7 @@ from functools import partial
 from io import StringIO
 from contextlib import contextmanager
 
-from installed.errors import InstallingPackageError
+from installed.errors import InstallingPackageError, RunningCommandError
 from installed.module.context import Context
 from installed.module.runner import run_python as standard_runner
 from installed.module.lock import lock
@@ -15,10 +15,9 @@ from installed.module.lock import lock
 
 @contextmanager
 def search_path(base_dir, logger, runner):
-    path_to_venv = os.path.join(base_dir, 'venv')
-    sys_path = os.path.join(path_to_venv, 'lib')
+    sys_path = os.path.join(base_dir, 'lib')
 
-    standard_runner(['-m', 'venv', path_to_venv], logger, True, [])
+    standard_runner(['-m', 'venv', base_dir], logger, True)
 
     for maybe_directory in os.listdir(path=sys_path):
         maybe_directory_full = os.path.join(sys_path, maybe_directory)
@@ -44,21 +43,16 @@ def pip_context(packages_names, options, logger, runner, catch_output, where):
         create_temp_directory = tempfile.TemporaryDirectory
     with create_temp_directory() as directory:
         with search_path(directory, logger, runner) as where:
-            outputs = []
             try:
                 if '-r' in options or '--requirement' in options:
-                    runner(['-m', 'pip', 'install', f'--target={where}', *options], logger, catch_output, outputs)
+                    runner(['-m', 'pip', 'install', f'--target={where}', *options], logger, catch_output)
                 else:
                     for package_name in packages_names:
-                        runner(['-m', 'pip', 'install', f'--target={where}', *options, package_name], logger, catch_output, outputs)
-            except subprocess.CalledProcessError as e:
-                new_error = InstallingPackageError()
-                if len(outputs) == 2:
-                    new_error.stdout = outputs[0]
-                    new_error.stderr = outputs[1]
-                else:
-                    new_error.stdout = ''
-                    new_error.stderr = ''
+                        runner(['-m', 'pip', 'install', f'--target={where}', *options, package_name], logger, catch_output)
+            except RunningCommandError as e:
+                new_error = InstallingPackageError(f'{str(e)} It occurred when installing one of the following packages: {", ".join(packages_names)}.')
+                new_error.stdout = e.stdout
+                new_error.stderr = e.stderr
                 raise new_error from e
 
             yield Context(where, logger, catch_output, options, partial(pip_context, logger=logger, runner=runner, catch_output=catch_output, where=directory))

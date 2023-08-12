@@ -47,7 +47,7 @@ def test_run_command_without_arguments():
 
     assert result.returncode == 1
     assert result.stdout.decode('utf-8')  == ''
-    assert result.stderr.decode('utf-8') == 'usage: instld python_file.py [argv ...]\n'
+    assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}'
 
 
 def test_run_command_with_arguments():
@@ -58,7 +58,7 @@ def test_run_command_with_arguments():
 
     script = os.path.join('tests', 'cli', 'data', 'main.py')
     with open(script, 'w') as file:
-        file.write('\n'.join(strings))
+        file.write(os.linesep.join(strings))
 
     extra_arguments_options = (
         [],

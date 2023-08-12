@@ -11,7 +11,7 @@ setup(
     version='0.0.17',
     author='Evgeniy Blinov',
     author_email='zheni-b@yandex.ru',
-    description='The simplest package management in runtime',
+    description='The simplest package management',
     long_description=readme,
     long_description_content_type='text/markdown',
     url='https://github.com/pomponchik/instld',

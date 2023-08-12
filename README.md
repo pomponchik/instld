@@ -1,6 +1,6 @@
 ![logo](https://raw.githubusercontent.com/pomponchik/instld/main/docs/assets/logo5.png)
 
-# INSTLD: the simplest package management in runtime
+# INSTLD: the simplest package management
 
 [![Downloads](https://pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)
 [![Downloads](https://pepy.tech/badge/instld)](https://pepy.tech/project/instld)
@@ -11,6 +11,7 @@
 
 Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code. In runtime.
 
+- ⚡ You can use 2 different versions of the same library in the same program.
 - ⚡ You can use 2 different versions of the same library in the same program.
 - ⚡ You can use incompatible libraries in the same project, as well as libraries with incompatible/conflicting dependencies.
 - ⚡ It's easy to share written scripts. The script file becomes self-sufficient - the user does not need to install the necessary libraries.
@@ -66,7 +67,7 @@ You can use `instld` to run your script. To do this, you need to run a command l
 instld script.py
 ```
 
-The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
+The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. If necessary, you can pass additional arguments to the command line, as if you are running a regular Python script. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
 
 
 ### Special comment language

@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import subprocess
 import shutil
 
@@ -37,5 +38,45 @@ def test_cli_where():
         assert os.path.isdir(full_path_to_the_lib)
 
         shutil.rmtree(path)
+
+    os.remove(script)
+
+
+def test_run_command_without_arguments():
+    result = subprocess.run(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
+
+    assert result.returncode == 1
+    assert result.stdout.decode('utf-8')  == ''
+    assert result.stderr.decode('utf-8') == 'usage: instld python_file.py [argv ...]\n'
+
+
+def test_run_command_with_arguments():
+    strings = [
+        'import json, sys',
+        'print(json.dumps(sys.argv), file=sys.stdout)',
+    ]
+
+    script = os.path.join('tests', 'cli', 'data', 'main.py')
+    with open(script, 'w') as file:
+        file.write('\n'.join(strings))
+
+    extra_arguments_options = (
+        [],
+        ['kek'],
+        ['--lol', 'kek'],
+        ['-l', 'kek'],
+    )
+
+    for extra_arguments in extra_arguments_options:
+        expected_arguments_without_command = [script] + extra_arguments
+        result = subprocess.run(['instld', *expected_arguments_without_command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=200)
+
+        result.check_returncode()
+        assert result.stderr.decode('utf-8') == ''
+
+        arguments_from_file = json.loads(result.stdout.decode('utf-8'))
+        arguments_from_file_without_command = arguments_from_file[1:]
+
+        assert arguments_from_file_without_command == expected_arguments_without_command
 
     os.remove(script)

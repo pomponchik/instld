@@ -67,7 +67,7 @@ You can use `instld` to run your script. To do this, you need to run a command l
 instld script.py
 ```
 
-The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
+The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. If necessary, you can pass additional arguments to the command line, as if you are running a regular Python script. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
 
 
 ### Special comment language

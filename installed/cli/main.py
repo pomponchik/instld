@@ -8,11 +8,11 @@ from threading import RLock
 
 import installed
 from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
-from installed.cli.parsing_arguments.get_arguments import get_arguments
+from installed.cli.parsing_arguments.get_python_file import get_python_file
 
 
 def start():
-    arguments = get_arguments()
+    python_file = get_python_file()
 
     with installed() as context:
         lock = RLock()
@@ -78,7 +78,7 @@ def start():
 
     builtins.__import__ = import_wrapper
 
-    spec = importlib.util.spec_from_file_location('kek', arguments.python_file)
+    spec = importlib.util.spec_from_file_location('kek', python_file)
     module = importlib.util.module_from_spec(spec)
     sys.modules['__main__'] = module
     spec.loader.exec_module(module)

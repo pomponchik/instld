@@ -1,3 +1,4 @@
+import os
 import sys
 import builtins
 import importlib
@@ -9,6 +10,7 @@ from threading import RLock
 import installed
 from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
 from installed.cli.parsing_arguments.get_python_file import get_python_file
+from installed.cli.traceback_cutting.cutting import set_cutting_excepthook
 
 
 def start():
@@ -78,9 +80,10 @@ def start():
 
     builtins.__import__ = import_wrapper
 
-    spec = importlib.util.spec_from_file_location('kek', python_file)
+    spec = importlib.util.spec_from_file_location('kek', os.path.abspath(python_file))
     module = importlib.util.module_from_spec(spec)
     sys.modules['__main__'] = module
+    set_cutting_excepthook(4)
     spec.loader.exec_module(module)
 
 

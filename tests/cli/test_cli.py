@@ -93,8 +93,8 @@ def test_exceptions_are_similar_with_just_python_command():
         with open(script, 'w') as file:
             file.write(f'raise {error}')
 
-        result_1 = subprocess.run(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
-        result_2 = subprocess.run(['python', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
+        result_1 = subprocess.run(['instld', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
+        result_2 = subprocess.run(['python', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
 
         assert result_1.returncode == result_2.returncode
         assert result_1.stdout == result_2.stdout

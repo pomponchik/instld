@@ -46,7 +46,7 @@ If you run the script [like this](#script-launch-mode), all dependencies will be
 instld script.py
 ```
 
-You can also call the [context manager](#сontext-manager-mode) from your code:
+You can also call the [context manager](#context-manager-mode) from your code:
 
 ```python
 import installed

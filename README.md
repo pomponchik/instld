@@ -26,6 +26,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages.
 - [**Context manager mode**](#context-manager-mode)
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
+  - [**Using an existing virtual environment**](#using-an-existing-virtual-environment)
   - [**Output and logging**](#output-and-logging)
 - [**How does it work?**](#how-does-it-work)
 
@@ -96,7 +97,7 @@ source venv/bin/activate
 instld script.py
 ```
 
-When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there.
+When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there. Note that by default, the activated virtual environment is read-only. That is, it is assumed that you will install all the necessary libraries there before running your script. If you want to install packages in runtime in a specific virtual environment - read about the second method further.
 
 Secondly, you can specify the path to the virtual environment directly [in the comments](#special-comment-language) to a specific import using the `where` directive:
 
@@ -181,6 +182,21 @@ with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/sim
 ```
 
 You cannot use options that tell `pip` where to install libraries.
+
+
+### Using an existing virtual environment
+
+By default, through the [context manager](#context-manager-mode), packages are installed in a temporary virtual environment, which is deleted after exiting the context. However, if you want to install the package in a permanent environment, there is also a way to do this: use the `where` argument.
+
+```python
+with installed('package', where='path/to/the/venv'):
+    import package
+```
+
+When manually specifying the path to the virtual environment directory, you need to consider several points:
+
+1. The format of the separator differs in different operating systems. For example, in Linux it is `/`, and in Windows it is `\`. To make your code multiplatform, use [`os.path.join`](https://docs.python.org/3/library/os.path.html#os.path.join) to define the path.
+2. You need to make sure that the virtual environment that you are passing the path to is created by the same Python interpreter that you use to run your code. Virtual environments created by different interpreters are not compatible with each other. For the same reasons, it is not worth storing virtual environment files in Git.
 
 
 ### Output and logging

@@ -109,6 +109,8 @@ If the path you specified does not exist when you first run the script, it will 
 
 Note that the path to the virtual environment in this case should not contain spaces.
 
+Since script launch mode uses a context manager to install packages "under the hood", you should also read about the features of installing packages in this way in the [corresponding section](#using-an-existing-virtual-environment).
+
 
 ## Context manager mode
 

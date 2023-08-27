@@ -10,5 +10,6 @@ def create_cutting_excepthook(old_hook, base_size):
         traceback.print_exception(exc_type, value, traceback_object)
     return new_hook
 
+
 def set_cutting_excepthook(base_size):
     sys.excepthook = create_cutting_excepthook(sys.excepthook, base_size)

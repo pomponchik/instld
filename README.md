@@ -107,7 +107,7 @@ import something  # instld: where path/to/the/venv
 
 If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped, therefore, starting from the second launch, the download is no longer required.
 
-Note that the path to the virtual environment in this case should not contain spaces.
+Note that the path to the virtual environment in this case should not contain spaces. In addition, there is no multiplatform way to specify directory paths using a comment. Therefore, it is not recommended to use paths consisting of more than one link.
 
 Since script launch mode uses a context manager to install packages "under the hood", you should also read about the features of installing packages in this way in the [corresponding section](#using-an-existing-virtual-environment).
 

@@ -35,6 +35,8 @@ jobs:
       env:
         CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
       if: runner.os == 'Linux'
+      with:
+        fail_ci_if_error: true # optional (default = false)
       run: |
        curl -Os https://uploader.codecov.io/latest/linux/codecov
        find . -iregex "codecov.*"

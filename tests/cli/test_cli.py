@@ -80,3 +80,24 @@ def test_run_command_with_arguments():
         assert arguments_from_file_without_command == expected_arguments_without_command
 
     os.remove(script)
+
+
+def test_exceptions_are_similar_with_just_python_command():
+    errors = [
+        'ValueError',
+        'ValueError("message")',
+    ]
+
+    for error in errors:
+        script = os.path.join('tests', 'cli', 'data', 'main.py')
+        with open(script, 'w') as file:
+            file.write(f'raise {error}')
+
+        result_1 = subprocess.run(['instld', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
+        result_2 = subprocess.run(['python', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
+
+        assert result_1.returncode == result_2.returncode
+        assert result_1.stdout == result_2.stdout
+        assert result_1.stderr == result_2.stderr
+
+        os.remove(script)

@@ -9,7 +9,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
 
-Thanks to this package, it is very easy to manage the lifecycle of packages directly from the code. In runtime.
+Thanks to this package, it is very easy to manage the lifecycle of packages.
 
 - ⚡ You can use 2 different versions of the same library in the same program.
 - ⚡ You can use incompatible libraries in the same project, as well as libraries with incompatible/conflicting dependencies.
@@ -26,6 +26,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages dire
 - [**Context manager mode**](#context-manager-mode)
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
+  - [**Using an existing virtual environment**](#using-an-existing-virtual-environment)
   - [**Output and logging**](#output-and-logging)
 - [**How does it work?**](#how-does-it-work)
 
@@ -46,7 +47,7 @@ If you run the script [like this](#script-launch-mode), all dependencies will be
 instld script.py
 ```
 
-You can also call the [context manager](#сontext-manager-mode) from your code:
+You can also call the [context manager](#context-manager-mode) from your code:
 
 ```python
 import installed
@@ -96,7 +97,7 @@ source venv/bin/activate
 instld script.py
 ```
 
-When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there.
+When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there. Note that by default, the activated virtual environment is read-only. That is, it is assumed that you will install all the necessary libraries there before running your script. If you want to install packages in runtime in a specific virtual environment - read about the second method further.
 
 Secondly, you can specify the path to the virtual environment directly [in the comments](#special-comment-language) to a specific import using the `where` directive:
 
@@ -106,7 +107,9 @@ import something  # instld: where path/to/the/venv
 
 If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped, therefore, starting from the second launch, the download is no longer required.
 
-Note that the path to the virtual environment in this case should not contain spaces.
+Note that the path to the virtual environment in this case should not contain spaces. In addition, there is no multiplatform way to specify directory paths using a comment. Therefore, it is not recommended to use paths consisting of more than one part.
+
+Since script launch mode uses a context manager to install packages "under the hood", you should also read about the features of installing packages in this way in the [corresponding section](#using-an-existing-virtual-environment).
 
 
 ## Context manager mode
@@ -181,6 +184,21 @@ with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/sim
 ```
 
 You cannot use options that tell `pip` where to install libraries.
+
+
+### Using an existing virtual environment
+
+By default, through the [context manager](#context-manager-mode), packages are installed in a temporary virtual environment, which is deleted after exiting the context. However, if you want to install the package in a permanent environment, there is also a way to do this: use the `where` argument.
+
+```python
+with installed('package', where='path/to/the/venv'):
+    import package
+```
+
+When manually specifying the path to the virtual environment directory, you need to consider several points:
+
+1. The format of the separator differs in different operating systems. For example, in Linux it is `/`, and in Windows it is `\`. To make your code multiplatform, use [`os.path.join`](https://docs.python.org/3/library/os.path.html#os.path.join) to define the path.
+2. You need to make sure that the virtual environment that you are passing the path to is created by the same Python interpreter that you use to run your code. Virtual environments created by different interpreters are not compatible with each other. For the same reasons, it is not worth storing virtual environment files in Git.
 
 
 ### Output and logging

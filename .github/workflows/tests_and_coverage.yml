@@ -3,6 +3,8 @@ name: Test-Package
 on:
   push
 
+github_checks: false
+
 jobs:
   build:
 
@@ -38,7 +40,3 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: false # optional (default = false)
-        patch:
-          default:
-            enabled: no
-            if_not_found: success

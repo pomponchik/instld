@@ -3,8 +3,6 @@ name: Test-Package
 on:
   push
 
-github_checks: false
-
 jobs:
   build:
 

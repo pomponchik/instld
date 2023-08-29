@@ -1,6 +1,5 @@
 import os
 import sys
-import site
 import builtins
 import importlib
 import inspect

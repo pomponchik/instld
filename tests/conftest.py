@@ -35,8 +35,9 @@ def main_runner():
 
         sys.argv = arguments
 
-        exits = []
-        sys.exit = lambda x: exits.append(x)
+        class LocalError(Exception): pass
+        def exit_handler(number): raise LocalError
+        sys.exit = exit_handler
 
         stdout_buffer = io.StringIO()
         stderr_buffer = io.StringIO()
@@ -44,12 +45,12 @@ def main_runner():
         with redirect_stdout(stdout_buffer) as stdout, redirect_stderr(stderr_buffer) as stderr:
             try:
                 start()
+            except LocalError:
+                returncode = 1
             except Exception as e:
                 returncode = 1
                 sys.excepthook(type(e), e, e.__traceback__)
             finally:
-                if len(exits) > 0:
-                    returncode = 1
                 result = MainRunResult(command=arguments, stdout=str.encode(stdout_buffer.getvalue()), stderr=str.encode(stderr_buffer.getvalue()), returncode=returncode)
 
         sys.excepthook = old_excepthook

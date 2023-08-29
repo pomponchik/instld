@@ -21,7 +21,7 @@ def test_cli_where(main_runner):
         file.write('\n'.join(strings))
 
     for runner in (main_runner, subprocess.run):
-        result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
+        result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=10000)
 
         result.check_returncode()
 
@@ -85,22 +85,27 @@ def test_run_command_with_arguments(main_runner):
     os.remove(script)
 
 
-def test_exceptions_are_similar_with_just_python_command():
+def test_exceptions_are_similar_with_just_python_command(main_runner):
     errors = [
         'ValueError',
         'ValueError("message")',
     ]
 
-    for error in errors:
-        script = os.path.join('tests', 'cli', 'data', 'main.py')
-        with open(script, 'w') as file:
-            file.write(f'raise {error}')
+    for runner in (main_runner, subprocess.run):
+        for error in errors:
+            script = os.path.join('tests', 'cli', 'data', 'main.py')
+            with open(script, 'w') as file:
+                file.write(f'raise {error}')
 
-        result_1 = subprocess.run(['instld', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
-        result_2 = subprocess.run(['python', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
+            result_1 = runner(['instld', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
+            result_2 = subprocess.run(['python', os.path.abspath(script)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=500)
 
-        assert result_1.returncode == result_2.returncode
-        assert result_1.stdout == result_2.stdout
-        assert result_1.stderr == result_2.stderr
+            assert result_1.returncode == result_2.returncode
+            assert result_1.stdout == result_2.stdout
+            print(1111)
+            print(result_1.stderr)
+            print(2222)
+            print(result_2.stderr)
+            assert result_1.stderr == result_2.stderr
 
-        os.remove(script)
+            os.remove(script)

@@ -7,7 +7,7 @@ import shutil
 import pytest
 
 
-@pytest.mark.timeout(60)
+@pytest.mark.timeout(120)
 def test_cli_where(main_runner):
     strings = [
         rf'import is_odd  # instld: where {os.path.join("tests", "cli", "data", "pok")}',
@@ -20,9 +20,7 @@ def test_cli_where(main_runner):
     with open(script, 'w') as file:
         file.write('\n'.join(strings))
 
-    for index, runner in enumerate((main_runner, subprocess.run)):
-        if not index:
-            continue
+    for runner in (main_runner, subprocess.run):
         result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=10000)
 
         result.check_returncode()

@@ -2,7 +2,7 @@
 
 # INSTLD: the simplest package management
 
-[![Downloads](https://pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)
+[![Downloads](https://static.pepy.tech/badge/locklib/month)](https://pepy.tech/project/instld)
 [![Downloads](https://static.pepy.tech/badge/locklib)](https://pepy.tech/project/instld)
 [![codecov](https://codecov.io/gh/pomponchik/installed/branch/main/graph/badge.svg)](https://codecov.io/gh/pomponchik/instld)
 [![Test-Package](https://github.com/pomponchik/instld/actions/workflows/coverage.yml/badge.svg)](https://github.com/pomponchik/instld/actions/workflows/coverage.yml)

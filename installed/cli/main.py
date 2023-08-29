@@ -1,5 +1,3 @@
-import coverage
-coverage.process_startup()
 import os
 import sys
 import site

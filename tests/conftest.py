@@ -1,24 +1,58 @@
+import io
 import os
 import sys
+from typing import List, Dict, Any, Optional
+from dataclasses import dataclass
+from subprocess import CalledProcessError
+from contextlib import redirect_stdout, redirect_stderr
+from unittest.mock import patch
 
 import pytest
 
-
-@pytest.fixture(scope='session')
-def create_sitecustomize():
-    with open(f'{sys.prefix}/lib/python3.9/site-packages/sitecustomize.py', 'w') as file:
-        file.write('import coverage; import sys; coverage.process_startup(); open("/Users/evgeniy.blinov/Desktop/Projects/instld/file.txt", "a").write(f"{sys.prefix}\n")')
-    with open(f'{sys.prefix}/lib/python3.9/site-packages/usercustomize.py', 'w') as file:
-        file.write('import coverage; import sys; coverage.process_startup(); open("/Users/evgeniy.blinov/Desktop/Projects/instld/file.txt", "a").write(f"{sys.prefix}\n")')
-
-    yield f'{sys.prefix}/lib/python3.9/site-packages/sitecustomize.py'
-    os.remove(f'{sys.prefix}/lib/python3.9/site-packages/sitecustomize.py')
+from installed.cli.main import start
 
 
-@pytest.fixture(scope='session')
-def environment_with_coverage_on(create_sitecustomize):
-    environ_copy = os.environ.copy()
-    environ_copy.update({'INSTLD_COVERAGE_ON': 'True'})
-    environ_copy.update({'COVERAGE_PROCESS_START': '.coveragerc'})
-    environ_copy.update({'ENABLE_USER_SITE': 'True'})
-    return environ_copy
+@dataclass
+class MainRunResult:
+    stdout: bytes
+    stderr: bytes
+    returncode: int
+    command: List[str]
+
+    def check_returncode(self):
+        if self.returncode != 0:
+            raise CalledProcessError(self.returncode, self.command)
+
+@pytest.fixture
+def main_runner():
+    @patch('sys.exit')
+    def runner_function(arguments: List[str], env: Optional[Dict[str, str]] = None, **kwargs: Any):
+        old_excepthook = sys.excepthook
+        old_argv = sys.argv
+        old_environ = os.environ
+
+        if env is not None:
+            os.environ = env
+
+        sys.argv = arguments
+
+        stdout_buffer = io.StringIO()
+        stderr_buffer = io.StringIO()
+        returncode = 0
+        with redirect_stdout(stdout_buffer) as stdout, redirect_stderr(stderr_buffer) as stderr:
+            try:
+                start()
+            except Exception as e:
+                returncode = 1
+            finally:
+                if sys.exit.called:
+                    returncode = 1
+                result = MainRunResult(command=arguments, stdout=str.encode(stdout_buffer.getvalue()), stderr=str.encode(stderr_buffer.getvalue()), returncode=returncode)
+
+        sys.excepthook = old_excepthook
+        sys.argv = old_argv
+        os.environ = old_environ
+
+        return result
+
+    yield runner_function

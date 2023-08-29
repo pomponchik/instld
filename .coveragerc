@@ -1,6 +1,0 @@
-[run]
-source=installed
-parallel=True
-
-[report]
-omit="*tests*"

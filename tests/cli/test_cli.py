@@ -20,7 +20,7 @@ def test_cli_where(main_runner):
     with open(script, 'w') as file:
         file.write('\n'.join(strings))
 
-    for index, runner in enumerate(main_runner, subprocess.run):
+    for index, runner in enumerate((main_runner, subprocess.run)):
         if not index:
             continue
         result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=10000)

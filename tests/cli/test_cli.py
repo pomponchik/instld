@@ -21,7 +21,7 @@ def test_cli_where(main_runner):
         file.write('\n'.join(strings))
 
     for runner in (main_runner, subprocess.run):
-        result = runner(['instld', script])
+        result = runner(['instld', script], bufsize=500)
 
         result.check_returncode()
 

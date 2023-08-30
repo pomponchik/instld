@@ -56,7 +56,7 @@ def main_runner():
                     sys.excepthook(type(e), e, e.__traceback__)
                 traceback_string = buffer.getvalue()
                 if sys.platform.lower() in ('win32',):
-                    traceback_string = traceback_string.replace('\r\n', '\n')    
+                    traceback_string = traceback_string.replace(os.linesep, '\n')    
                     traceback_string = traceback_string.replace('\n', os.linesep)
                 print(traceback_string, file=sys.stderr, end='')
 

@@ -109,3 +109,8 @@ def test_exceptions_are_similar_with_just_python_command(main_runner):
             assert result_1.stderr == result_2.stderr
 
             os.remove(script)
+
+
+def test_test():
+    if sys.platform.lower() in ('win32',):
+        print('linesep:', os.linesep)

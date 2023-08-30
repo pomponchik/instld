@@ -60,4 +60,4 @@ def main_runner():
 
         return result
 
-    yield runner_function
+    return runner_function

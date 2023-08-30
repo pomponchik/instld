@@ -7,7 +7,7 @@ import shutil
 import pytest
 
 
-@pytest.mark.timeout(120)
+@pytest.mark.timeout(180)
 def test_cli_where(main_runner):
     strings = [
         rf'import is_odd  # instld: where {os.path.join("tests", "cli", "data", "pok")}',

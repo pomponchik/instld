@@ -16,8 +16,9 @@ def create_cutting_excepthook(old_hook, base_size):
             traceback.print_exception(exc_type, value, traceback_object)
         traceback_string = buffer.getvalue()
         if sys.platform.lower() in ('win32',):
-            traceback_string = traceback_string.replace(os.linesep, '\n')
             traceback_string = traceback_string.replace('\n', os.linesep)
+            traceback_string = traceback_string.replace(os.linesep, '\n')
+
         print(traceback_string, file=sys.stderr, end='')
         #traceback.print_exception(exc_type, value, traceback_object)
     return new_hook

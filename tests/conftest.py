@@ -50,17 +50,20 @@ def main_runner():
                 returncode = 1
             except Exception as e:
                 returncode = 1
-                #sys.excepthook(type(e), e, e.__traceback__)
-                buffer = io.StringIO()
-                with redirect_stderr(buffer):
-                    sys.excepthook(type(e), e, e.__traceback__)
-                traceback_string = buffer.getvalue()
-                if sys.platform.lower() in ('win32',):
-                    #traceback_string = traceback_string.replace(os.linesep, '\n')
-                    traceback_string = traceback_string.replace('\n', os.linesep)
-                print(traceback_string, file=sys.stderr, end='')
+                sys.excepthook(type(e), e, e.__traceback__)
+                #buffer = io.StringIO()
+                #with redirect_stderr(buffer):
+                #    sys.excepthook(type(e), e, e.__traceback__)
+                #traceback_string = buffer.getvalue()
+                #if sys.platform.lower() in ('win32',):
+                #    #traceback_string = traceback_string.replace(os.linesep, '\n')
+                #    traceback_string = traceback_string.replace('\n', os.linesep)
+                #print(traceback_string, file=sys.stderr, end='')
 
             finally:
+                if sys.platform.lower() in ('win32',):
+                    stdout = stdout.replace('\n', os.linesep)
+                    stderr = stderr.replace('\n', os.linesep)
                 result = MainRunResult(command=arguments, stdout=str.encode(stdout_buffer.getvalue()), stderr=str.encode(stderr_buffer.getvalue()), returncode=returncode)
 
         sys.excepthook = old_excepthook

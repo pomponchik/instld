@@ -64,8 +64,8 @@ def main_runner():
                 stdout = stdout_buffer.getvalue()
                 stderr = stderr_buffer.getvalue()
                 if sys.platform.lower() in ('win32',):
-                    stdout = stdout.replace('\n', os.linesep).replace('\r\r\n', os.linesep)
-                    stderr = stderr.replace('\n', os.linesep).replace('\r\r\n', os.linesep)
+                    stdout = stdout.replace('\n', os.linesep).replace('\r\r', '\r')
+                    stderr = stderr.replace('\n', os.linesep).replace('\r\r', '\r')
 
                 result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), returncode=returncode)
 

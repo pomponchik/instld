@@ -61,13 +61,13 @@ def main_runner():
                 #print(traceback_string, file=sys.stderr, end='')
 
             finally:
-                stdout = stdout.getvalue()
-                stderr = stderr.getvalue()
+                stdout = stdout_buffer.getvalue()
+                stderr = stderr_buffer.getvalue()
                 if sys.platform.lower() in ('win32',):
                     stdout = stdout.replace('\n', os.linesep)
                     stderr = stderr.replace('\n', os.linesep)
 
-                result = MainRunResult(command=arguments, stdout=str.encode(stdout_buffer), stderr=str.encode(stderr_buffer), returncode=returncode)
+                result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), returncode=returncode)
 
         sys.excepthook = old_excepthook
         sys.argv = old_argv

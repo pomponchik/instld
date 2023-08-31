@@ -9,7 +9,7 @@ from installed.cli.traceback_cutting.traceback_utils import cut_base_of_tracebac
 
 def create_cutting_excepthook(old_hook, base_size):
     def new_hook(exc_type, value, traceback_object):
-        #traceback_object = cut_base_of_traceback(traceback_object, base_size)
+        traceback_object = cut_base_of_traceback(traceback_object, base_size)
 
         #buffer = io.StringIO()
         #with redirect_stderr(buffer):

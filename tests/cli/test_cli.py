@@ -91,7 +91,7 @@ def test_exceptions_are_similar_with_just_python_command(main_runner):
         'ValueError("message")',
     ]
 
-    for runner in (main_runner, subprocess.run):
+    for runner in (subprocess.run, main_runner):
         for error in errors:
             script = os.path.join('tests', 'cli', 'data', 'main.py')
             with open(script, 'w') as file:
@@ -129,10 +129,3 @@ def test_exceptions_are_similar_with_just_python_command_2():
         assert result_1.stderr == result_2.stderr
 
         os.remove(script)
-
-
-def test_test():
-    if sys.platform.lower() in ('win32',):
-        print('linesep:', os.linesep)
-        assert os.linesep == '\n'
-        assert False

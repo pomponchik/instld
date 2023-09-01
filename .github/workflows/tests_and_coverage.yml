@@ -27,6 +27,10 @@ jobs:
       shell: bash
       run: python setup.py install
 
+    - name: Print all libs
+      shell: bash
+      run: pip list
+
     - name: Run tests and show coverage on the command line
       run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear && coverage report -m
 

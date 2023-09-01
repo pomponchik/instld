@@ -47,8 +47,14 @@ def main_runner():
         with redirect_stdout(stdout_buffer) as stdout, redirect_stderr(stderr_buffer) as stderr:
             try:
                 start()
+                stdout = stdout_buffer.getvalue()
+                stderr = stderr_buffer.getvalue()
+                before_stderr = str.encode(stderr)
             except LocalError:
                 returncode = 1
+                stdout = stdout_buffer.getvalue()
+                stderr = stderr_buffer.getvalue()
+                before_stderr = str.encode(stderr)
             except Exception as e:
                 returncode = 1
                 sys.excepthook(type(e), e, e.__traceback__)
@@ -60,14 +66,15 @@ def main_runner():
                 #    #traceback_string = traceback_string.replace(os.linesep, '\n')
                 #    traceback_string = traceback_string.replace('\n', os.linesep)
                 #print(traceback_string, file=sys.stderr, end='')
-
-            finally:
                 stdout = stdout_buffer.getvalue()
                 stderr = stderr_buffer.getvalue()
                 before_stderr = str.encode(stderr)
                 if sys.platform.lower() in ('win32',):
                     stdout = stdout.replace('\n', os.linesep).replace('\r\r', '\r')
                     stderr = stderr.replace('\n', os.linesep).replace('\r\r', '\r')
+
+            finally:
+
 
                 result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), before_stderr=before_stderr, returncode=returncode)
 

@@ -54,6 +54,7 @@ def test_run_command_without_arguments(main_runner):
             print(result.stderr)
             print(repr(result.stderr.decode('utf-8')))
             print(repr(f'usage: instld python_file.py [argv ...]{os.linesep}'))
+            print(result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}')
         assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}'
 
 

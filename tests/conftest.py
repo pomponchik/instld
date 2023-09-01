@@ -31,6 +31,7 @@ def main_runner():
         old_argv = sys.argv
         old_environ = os.environ
         old_exit = sys.exit
+        old_env = os.environ
 
         if env is not None:
             os.environ = env
@@ -74,14 +75,13 @@ def main_runner():
                     stderr = stderr.replace('\n', os.linesep).replace('\r\r', '\r')
 
             finally:
-
-
                 result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), before_stderr=before_stderr, returncode=returncode)
 
         sys.excepthook = old_excepthook
         sys.argv = old_argv
         os.environ = old_environ
         sys.exit = old_exit
+        os.environ = old_env
 
         return result
 

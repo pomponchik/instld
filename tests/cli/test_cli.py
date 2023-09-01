@@ -51,6 +51,7 @@ def test_run_command_without_arguments(main_runner):
         assert result.stdout.decode('utf-8')  == ''
         if not index:
             print(result.before_stderr)
+            print(result.stderr)
         assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}'
 
 

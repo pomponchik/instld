@@ -53,6 +53,7 @@ def test_run_command_without_arguments(main_runner):
             print(result.before_stderr)
             print(result.stderr)
             print(result.stderr.decode('utf-8'))
+            print(fr"{result.stderr.decode('utf-8')}")
         assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}'
 
 

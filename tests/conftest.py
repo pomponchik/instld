@@ -16,6 +16,7 @@ from installed.cli.main import start
 class MainRunResult:
     stdout: bytes
     stderr: bytes
+    before_stderr: bytes
     returncode: int
     command: List[str]
 
@@ -63,11 +64,12 @@ def main_runner():
             finally:
                 stdout = stdout_buffer.getvalue()
                 stderr = stderr_buffer.getvalue()
+                before_stderr = str.encode(stderr)
                 if sys.platform.lower() in ('win32',):
                     stdout = stdout.replace('\n', os.linesep).replace('\r\r', '\r')
                     stderr = stderr.replace('\n', os.linesep).replace('\r\r', '\r')
 
-                result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), returncode=returncode)
+                result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), before_stderr=before_stderr, returncode=returncode)
 
         sys.excepthook = old_excepthook
         sys.argv = old_argv

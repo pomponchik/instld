@@ -56,6 +56,9 @@ def test_run_command_without_arguments(main_runner):
         print(repr(f'usage: instld python_file.py [argv ...]{os.linesep}'))
         print(stderr == f'usage: instld python_file.py [argv ...]{os.linesep}')
         expect = (stderr == f'usage: instld python_file.py [argv ...]{os.linesep}')
+
+        for s1, s2 in zip(stderr, f'usage: instld python_file.py [argv ...]{os.linesep}'):
+            assert s1 == s2
         print(expect)
         assert expect
 

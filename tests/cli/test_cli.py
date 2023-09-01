@@ -52,8 +52,8 @@ def test_run_command_without_arguments(main_runner):
 
         assert result.returncode == 1
         assert stdout  == ''
-        print(stderr == f'usage: instld python_file.py [argv ...]{os.linesep}')
-        assert stderr == f'usage: instld python_file.py [argv ...]{os.linesep}'
+        expect = stderr == f'usage: instld python_file.py [argv ...]{os.linesep}'
+        assert expect
 
 
 def test_test():

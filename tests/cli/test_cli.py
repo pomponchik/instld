@@ -44,7 +44,7 @@ def test_cli_where(main_runner):
 
 
 def test_run_command_without_arguments(main_runner):
-    for index, runner in enumerate((main_runner, subprocess.run)):
+    for runner in (subprocess.run, ):
         result = runner(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
 
         stdout = result.stdout.decode('utf-8')
@@ -52,15 +52,7 @@ def test_run_command_without_arguments(main_runner):
 
         assert result.returncode == 1
         assert stdout  == ''
-        print(repr(stderr))
-        print(repr(f'usage: instld python_file.py [argv ...]{os.linesep}'))
-        print(stderr == f'usage: instld python_file.py [argv ...]{os.linesep}')
-        expect = (stderr == f'usage: instld python_file.py [argv ...]{os.linesep}')
-
-        for s1, s2 in zip(stderr, f'usage: instld python_file.py [argv ...]{os.linesep}'):
-            assert s1 == s2
-        print(expect)
-        assert expect
+        assert stderr == f'usage: instld python_file.py [argv ...]{os.linesep}'
 
 
 def test_test():

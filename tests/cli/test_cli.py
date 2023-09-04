@@ -43,21 +43,12 @@ def test_cli_where(main_runner):
     os.remove(script)
 
 
-def test_run_command_without_arguments(main_runner):
-    for runner in (subprocess.run, ):
-        result = runner(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
+def test_run_command_without_arguments():
+    result = subprocess.run(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
 
-        stdout = result.stdout.decode('utf-8')
-        stderr = result.stderr.decode('utf-8')
-
-        assert result.returncode == 1
-        assert stdout  == ''
-        assert stderr == f'usage: instld python_file.py [argv ...]{os.linesep}'
-
-
-def test_test():
-    print(str.encode(f'usage: instld python_file.py [argv ...]{os.linesep}').decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}')
-    assert str.encode(f'usage: instld python_file.py [argv ...]{os.linesep}').decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}'
+    assert result.returncode == 1
+    assert result.stdout.decode('utf-8')  == ''
+    assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]{os.linesep}'
 
 
 def test_run_command_with_arguments(main_runner):

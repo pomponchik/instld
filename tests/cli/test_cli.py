@@ -49,6 +49,8 @@ def test_run_command_without_arguments(main_runner):
 
         assert result.returncode == 1
         assert result.stdout.decode('utf-8')  == ''
+        print(repr(result.stderr.decode('utf-8')))
+        print(result.stderr)
         assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]\n'
 
 

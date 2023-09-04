@@ -53,7 +53,7 @@ def test_run_command_without_arguments(main_runner):
         print(repr(result.stderr))
         print(repr(f'usage: instld python_file.py [argv ...]{os.linesep}'))
         print(result.stderr == f'usage: instld python_file.py [argv ...]{os.linesep}')
-        assert result.stderr == f'usage: instld python_file.py [argv ...]{os.linesep}'
+        assert result.stderr == f'usage: instld python_file.py [argv ...]\n'
 
 
 def test_run_command_with_arguments(main_runner):

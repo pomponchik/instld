@@ -44,7 +44,7 @@ def test_cli_where(main_runner):
 
 
 def test_run_command_without_arguments():
-    result = subprocess.run(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
+    result = subprocess.run(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
 
     assert result.returncode == 1
     assert result.stdout.decode('utf-8')  == ''

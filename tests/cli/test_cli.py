@@ -45,11 +45,11 @@ def test_cli_where(main_runner):
 
 def test_run_command_without_arguments(main_runner):
     for runner in (main_runner, subprocess.run):
-        result = runner(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
+        result = runner(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100)
 
         assert result.returncode == 1
-        assert result.stdout  == ''
-        assert result.stderr == f'usage: instld python_file.py [argv ...]\n'
+        assert result.stdout.decode('utf-8')  == ''
+        assert result.stderr.decode('utf-8') == f'usage: instld python_file.py [argv ...]\n'
 
 
 def test_run_command_with_arguments(main_runner):

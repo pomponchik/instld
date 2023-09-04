@@ -32,7 +32,7 @@ jobs:
       run: pip list
 
     - name: Run tests and show coverage on the command line
-      run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear && coverage report -m
+      run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear --assert=plain && coverage report -m
 
     - name: Upload reports to codecov
       env:

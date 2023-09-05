@@ -23,11 +23,19 @@ setup(
         ]
     },
     classifiers=[
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'License :: OSI Approved :: MIT License',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Interpreters',
+        'Topic :: Utilities',
+        'Topic :: System :: Archiving :: Packaging',
+        'Topic :: System :: Archiving :: Installation/Setup',
     ],
 )

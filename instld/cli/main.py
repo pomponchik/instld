@@ -13,7 +13,7 @@ from instld.cli.parsing_arguments.get_python_file import get_python_file
 from instld.cli.traceback_cutting.cutting import set_cutting_excepthook
 
 
-def start():
+def main():
     python_file = get_python_file()
 
     with instld() as context:

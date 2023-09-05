@@ -9,7 +9,7 @@ from contextlib import redirect_stdout, redirect_stderr
 
 import pytest
 
-from instld.cli.main import start
+from instld.cli.main import main
 
 
 @dataclass
@@ -47,7 +47,7 @@ def main_runner():
         returncode = 0
         with redirect_stdout(stdout_buffer) as stdout, redirect_stderr(stderr_buffer) as stderr:
             try:
-                start()
+                main()
                 stdout = stdout_buffer.getvalue()
                 stderr = stderr_buffer.getvalue()
                 before_stderr = str.encode(stderr)

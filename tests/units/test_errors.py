@@ -1,1 +1,1 @@
-from installed.errors import InstallingPackageError
+from instld.errors import InstallingPackageError

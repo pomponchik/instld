@@ -9,7 +9,7 @@ from contextlib import redirect_stdout, redirect_stderr
 
 import pytest
 
-from installed.cli.main import start
+from instld.cli.main import start
 
 
 @dataclass

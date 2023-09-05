@@ -8,9 +8,9 @@ from tempfile import TemporaryDirectory
 from threading import RLock
 
 import installed
-from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
-from installed.cli.parsing_arguments.get_python_file import get_python_file
-from installed.cli.traceback_cutting.cutting import set_cutting_excepthook
+from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from instld.cli.parsing_arguments.get_python_file import get_python_file
+from instld.cli.traceback_cutting.cutting import set_cutting_excepthook
 
 
 def start():

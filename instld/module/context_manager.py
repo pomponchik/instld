@@ -6,10 +6,10 @@ from functools import partial
 from io import StringIO
 from contextlib import contextmanager
 
-from installed.errors import InstallingPackageError, RunningCommandError
-from installed.module.context import Context
-from installed.module.runner import run_python as standard_runner
-from installed.module.lock import lock
+from instld.errors import InstallingPackageError, RunningCommandError
+from instld.module.context import Context
+from instld.module.runner import run_python as standard_runner
+from instld.module.lock import lock
 
 
 @contextmanager

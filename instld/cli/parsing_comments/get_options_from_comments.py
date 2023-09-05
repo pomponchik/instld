@@ -1,5 +1,5 @@
-from installed.errors import InstallingPackageError
-from installed.cli.parsing_comments.get_comment_string import get_comment_string
+from instld.errors import InstallingPackageError
+from instld.cli.parsing_comments.get_comment_string import get_comment_string
 
 
 def get_options_from_comments(frame):

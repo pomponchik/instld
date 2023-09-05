@@ -2,8 +2,8 @@ import inspect
 
 import pytest
 
-from installed.errors import InstallingPackageError
-from installed.cli.parsing_comments.get_comment_string import get_comment_string
+from instld.errors import InstallingPackageError
+from instld.cli.parsing_comments.get_comment_string import get_comment_string
 
 
 def test_get_comment_started_with_instld():

@@ -1,6 +1,6 @@
 import sys
 
-from installed.module.command_executer import CommandExecuter
+from instld.module.command_executer import CommandExecuter
 
 
 def run_python(args, logger, catch_output):

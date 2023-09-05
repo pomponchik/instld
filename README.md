@@ -50,9 +50,9 @@ instld script.py
 You can also call the [context manager](#context-manager-mode) from your code:
 
 ```python
-import installed
+import instld
 
-with installed('some_package'):
+with instld('some_package'):
     import some_module
 ```
 
@@ -114,17 +114,17 @@ Since script launch mode uses a context manager to install packages "under the h
 
 ## Context manager mode
 
-You can also use `instld` to install and use packages in runtime. The context manager `installed` generates a context. While you are inside the context manager, you can import modules using the usual `import` command:
+You can also use `instld` to install and use packages in runtime. The context manager `instld` generates a context. While you are inside the context manager, you can import modules using the usual `import` command:
 
 ```python
-with installed('some_package'):
+with instld('some_package'):
     import some_module
 ```
 
 However, there are cases when you need the module to be imported strictly from a given context. In this case, it is better to use the `import_here` method:
 
 ```python
-with installed('some_package') as context:
+with instld('some_package') as context:
     module = context.import_here('some_module')
 ```
 
@@ -138,7 +138,7 @@ The library provides isolation of various contexts among themselves, so in the s
 You can install several packages by specifying their names separated by commas:
 
 ```python
-with installed('package_1', 'package_2', 'package_3') as context:
+with instld('package_1', 'package_2', 'package_3') as context:
     module_1 = context.import_here('module_1')
     module_2 = context.import_here('module_2')
     module_3 = context.import_here('module_3')
@@ -149,9 +149,9 @@ In this case, all packages will be installed in one context and you can import t
 You can also create separate contexts for different packages:
 
 ```python
-with installed('package_1') as context_1:
-    with installed('package_2') as context_2:
-        with installed('package_3') as context_3:
+with instld('package_1') as context_1:
+    with instld('package_2') as context_2:
+        with instld('package_3') as context_3:
             module_1 = context_1.import_here('module_1')
             module_2 = context_2.import_here('module_2')
             module_3 = context_3.import_here('module_3')
@@ -162,8 +162,8 @@ In this case, each package was installed in its own independent context, and we 
 This capability is very powerful. You can place libraries in different contexts that are incompatible with each other. You can also install different versions of the same library in neighboring contexts. Here's how it will work using the [Flask](https://flask.palletsprojects.com/) example:
 
 ```python
-with installed('flask==2.0.2') as context_1:
-    with installed('flask==2.0.0') as context_2:
+with instld('flask==2.0.2') as context_1:
+    with instld('flask==2.0.0') as context_2:
         flask_1 = context_1.import_here('flask')
         flask_2 = context_2.import_here('flask')
 
@@ -176,10 +176,10 @@ with installed('flask==2.0.2') as context_1:
 
 ### Options
 
-You can use [any options](https://pip.pypa.io/en/stable/cli/pip_install/) available for `pip`. To do this, you need to slightly change the name of the option, replacing the hyphens with underscores, and pass it as an argument to `installed`. Here is an example of how using the `--index-url` option will look like:
+You can use [any options](https://pip.pypa.io/en/stable/cli/pip_install/) available for `pip`. To do this, you need to slightly change the name of the option, replacing the hyphens with underscores, and pass it as an argument to `instld`. Here is an example of how using the `--index-url` option will look like:
 
 ```python
-with installed('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/'):
+with instld('super_test_project==0.0.1', index_url='https://test.pypi.org/simple/'):
     import super_test
 ```
 
@@ -191,7 +191,7 @@ You cannot use options that tell `pip` where to install libraries.
 By default, through the [context manager](#context-manager-mode), packages are installed in a temporary virtual environment, which is deleted after exiting the context. However, if you want to install the package in a permanent environment, there is also a way to do this: use the `where` argument.
 
 ```python
-with installed('package', where='path/to/the/venv'):
+with instld('package', where='path/to/the/venv'):
     import package
 ```
 
@@ -206,7 +206,7 @@ When manually specifying the path to the virtual environment directory, you need
 By default, you can see the output of the installation progress in the console:
 
 ```python
->>> with installed('flask'):
+>>> with instld('flask'):
 ...     import flask
 ...
 Collecting flask
@@ -234,20 +234,20 @@ Successfully installed Jinja2-3.1.2 MarkupSafe-2.1.2 Werkzeug-2.3.3 blinker-1.6.
 If you don't want to see this output, pass the `catch_output` argument:
 
 ```python
->>> with installed('flask', catch_output=True):
+>>> with instld('flask', catch_output=True):
 ...     import flask
 ...
 >>>
 ```
 
-In case of installation errors, you will get an `installed.errors.InstallingPackageError` exception. From the object of this exception, you can get `stdout` and `stderr` even if you have forbidden the output:
+In case of installation errors, you will get an `instld.errors.InstallingPackageError` exception. From the object of this exception, you can get `stdout` and `stderr` even if you have forbidden the output:
 
 ```python
-from installed.errors import InstallingPackageError
+from instld.errors import InstallingPackageError
 
 
 try:
-    with installed('some_wrong_pack', catch_output=True):
+    with instld('some_wrong_pack', catch_output=True):
         import some_wrong_module
 except InstallingPackageError as e:
     print(e.stdout)
@@ -268,7 +268,7 @@ logging.basicConfig(
     ]
 )
 
-with installed('flask', catch_output=True):
+with instld('flask', catch_output=True):
     import flask
 ```
 

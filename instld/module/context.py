@@ -3,8 +3,8 @@ import importlib
 from contextlib import contextmanager
 import copy
 
-from installed.module.lock import lock
-from installed.common_utils.convert_options import convert_options
+from instld.module.lock import lock
+from instld.common_utils.convert_options import convert_options
 
 
 class Context:

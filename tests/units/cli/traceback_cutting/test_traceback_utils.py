@@ -1,4 +1,4 @@
-from installed.cli.traceback_cutting.traceback_utils import count_traceback_lenth, cut_base_of_traceback
+from instld.cli.traceback_cutting.traceback_utils import count_traceback_lenth, cut_base_of_traceback
 
 
 def test_count_traceback_lenth_empty():

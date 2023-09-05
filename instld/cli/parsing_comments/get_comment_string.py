@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from installed.errors import InstallingPackageError
+from instld.errors import InstallingPackageError
 
 
 @lru_cache()

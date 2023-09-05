@@ -2,8 +2,8 @@ import inspect
 
 import pytest
 
-from installed.errors import InstallingPackageError
-from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from instld.errors import InstallingPackageError
+from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments
 
 
 def test_get_normal_options():
@@ -22,7 +22,7 @@ def test_get_wrong_options():
     with pytest.raises(InstallingPackageError):
         options = get_options_from_comments(inspect.currentframe())  # instld: lol
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments(inspect.currentframe())  # instld: 
+        options = get_options_from_comments(inspect.currentframe())  # instld:
 
 
 def test_get_empty_options():

@@ -1,1 +1,1 @@
-raise ValueError
+raise ValueError("message")

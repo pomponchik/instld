@@ -27,14 +27,19 @@ jobs:
       shell: bash
       run: python setup.py install
 
+    - name: Print all libs
+      shell: bash
+      run: pip list
+
     - name: Run tests and show coverage on the command line
-      run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear && coverage report -m
+      run: coverage run --source=installed --omit="*tests*" -m pytest --cache-clear --assert=plain && coverage report -m
 
     - name: Upload reports to codecov
       env:
         CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
       if: runner.os == 'Linux'
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true # optional (default = false)
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        find . -iregex "codecov.*"
+        chmod +x codecov
+        ./codecov -t ${CODECOV_TOKEN}

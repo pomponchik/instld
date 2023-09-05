@@ -1,7 +1,6 @@
 import os
 import sys
 import tempfile
-import subprocess
 from functools import partial
 
 from io import StringIO

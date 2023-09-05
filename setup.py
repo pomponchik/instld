@@ -36,6 +36,5 @@ setup(
         'Topic :: Software Development :: Interpreters',
         'Topic :: Utilities',
         'Topic :: System :: Archiving :: Packaging',
-        'Topic :: System :: Archiving :: Installation/Setup',
     ],
 )

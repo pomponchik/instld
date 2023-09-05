@@ -1,4 +1,4 @@
-from installed.module.context import Context
+from instld.module.context import Context
 
 
 def test_context_repr():

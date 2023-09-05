@@ -1,10 +1,10 @@
 import sys
 import logging
 
-from installed.module.context_manager import pip_context
-from installed.module.runner import run_python
-from installed.module.empty_logger import EmptyLogger
-from installed.common_utils.convert_options import convert_options
+from instld.module.context_manager import pip_context
+from instld.module.runner import run_python
+from instld.module.empty_logger import EmptyLogger
+from instld.common_utils.convert_options import convert_options
 
 
 class ProxyModule(sys.modules[__name__].__class__):

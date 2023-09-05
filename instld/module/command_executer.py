@@ -2,8 +2,8 @@ import sys
 from threading import Thread, Lock
 from subprocess import Popen, PIPE, CalledProcessError
 
-from installed.module.empty_logger import EmptyLogger
-from installed.errors import RestartingCommandError, RunningCommandError
+from instld.module.empty_logger import EmptyLogger
+from instld.errors import RestartingCommandError, RunningCommandError
 
 
 class CommandExecuter:

@@ -7,16 +7,16 @@ from contextlib import contextmanager
 from tempfile import TemporaryDirectory
 from threading import RLock
 
-import installed
-from installed.cli.parsing_comments.get_options_from_comments import get_options_from_comments
-from installed.cli.parsing_arguments.get_python_file import get_python_file
-from installed.cli.traceback_cutting.cutting import set_cutting_excepthook
+import instld
+from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from instld.cli.parsing_arguments.get_python_file import get_python_file
+from instld.cli.traceback_cutting.cutting import set_cutting_excepthook
 
 
-def start():
+def main():
     python_file = get_python_file()
 
-    with installed() as context:
+    with instld() as context:
         lock = RLock()
         old_import = builtins.__import__
         locations = {}
@@ -37,7 +37,7 @@ def start():
                     if location_context is not None:
                         return location_context[1]
 
-                    manager = installed(where=where)
+                    manager = instld(where=where)
                     local_context = manager.__enter__()
                     locations[where] = (manager, local_context)
                     return local_context

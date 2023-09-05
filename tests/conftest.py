@@ -26,7 +26,7 @@ class MainRunResult:
 
 @pytest.fixture
 def main_runner():
-    def runner_function(arguments: List[str], env: Optional[Dict[str, str]] = None, **kwargs: Any):
+    def runner_function(arguments: List[str], env: Optional[Dict[str, str]] = None, universal_newlines: Optional[bool] = None, **kwargs: Any):
         old_excepthook = sys.excepthook
         old_argv = sys.argv
         old_environ = os.environ
@@ -59,23 +59,17 @@ def main_runner():
             except Exception as e:
                 returncode = 1
                 sys.excepthook(type(e), e, e.__traceback__)
-                #buffer = io.StringIO()
-                #with redirect_stderr(buffer):
-                #    sys.excepthook(type(e), e, e.__traceback__)
-                #traceback_string = buffer.getvalue()
-                #if sys.platform.lower() in ('win32',):
-                #    #traceback_string = traceback_string.replace(os.linesep, '\n')
-                #    traceback_string = traceback_string.replace('\n', os.linesep)
-                #print(traceback_string, file=sys.stderr, end='')
                 stdout = stdout_buffer.getvalue()
                 stderr = stderr_buffer.getvalue()
                 before_stderr = str.encode(stderr)
                 if sys.platform.lower() in ('win32',):
                     stdout = stdout.replace('\n', os.linesep).replace('\r\r', '\r')
                     stderr = stderr.replace('\n', os.linesep).replace('\r\r', '\r')
-
             finally:
-                result = MainRunResult(command=arguments, stdout=str.encode(stdout), stderr=str.encode(stderr), before_stderr=before_stderr, returncode=returncode)
+                if not (universal_newlines is not None and universal_newlines):
+                    stdout = str.encode(stdout)
+                    stderr = str.encode(stderr)
+                result = MainRunResult(command=arguments, stdout=stdout, stderr=stderr, before_stderr=before_stderr, returncode=returncode)
 
         sys.excepthook = old_excepthook
         sys.argv = old_argv

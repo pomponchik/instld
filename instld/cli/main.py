@@ -11,6 +11,7 @@ import instld
 from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments
 from instld.cli.parsing_arguments.get_python_file import get_python_file
 from instld.cli.traceback_cutting.cutting import set_cutting_excepthook
+from instld.errors import CommentFormatError
 
 
 def main():
@@ -56,6 +57,14 @@ def main():
             if 'version' in options:
                 package_name = f'{package_name}=={options.pop("version")}'
 
+            catch_output = options.pop('catch_output', 'no').lower()
+            if catch_output in ('yes', 'on', 'true'):
+                catch_output = True
+            elif catch_output in ('no', 'off', 'false'):
+                catch_output = False
+            else:
+                raise CommentFormatError('For option "catch_output" you can use the following values: "yes", "on", "true", "no", "off", "false".')
+
             current_context = get_current_context(options.pop('where', None))
 
             with lock:
@@ -63,7 +72,7 @@ def main():
                     try:
                         result = __import__(name, *args, **kwargs)
                     except (ModuleNotFoundError, ImportError) as e:
-                        current_context.install(package_name)
+                        current_context.install(package_name, catch_output=catch_output, **options)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result
 

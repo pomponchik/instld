@@ -125,3 +125,27 @@ def test_exceptions_are_similar_with_just_python_command_2():
         assert result_1.stderr == result_2.stderr
 
         os.remove(script)
+
+
+def test_install_package_from_another_repository(main_runner):
+    strings = [
+        'import super_test  # instld: package super_test_project, version 0.0.1, index_url https://test.pypi.org/simple/, catch_output true',
+        'print(super_test.function(2, 3))',
+    ]
+
+    script = os.path.join('tests', 'cli', 'data', 'main.py')
+    with open(script, 'w') as file:
+        file.write('\n'.join(strings))
+
+    for runner in (subprocess.run, main_runner):
+        result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
+
+        result.check_returncode()
+
+        print(result.stderr)
+        print(result.stdout)
+        #assert result.stderr == ''
+        assert result.stdout == '5\n'
+
+
+    os.remove(script)

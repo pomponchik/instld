@@ -21,4 +21,7 @@ def get_options_from_comments(frame):
             option_value = splitted_option[1].strip().lower()
             result[option_name] = option_value
 
+    result.pop('doc', None)
+    result.pop('comment', None)
+
     return result

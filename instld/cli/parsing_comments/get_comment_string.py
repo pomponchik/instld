@@ -24,7 +24,7 @@ def get_comment_string_from_file(line_number, file_name):
     except (FileNotFoundError, OSError):
         return None
 
-def get_comment_string(frame):
+def get_comment_string_by_frame(frame):
     line_number = frame.f_lineno
     code = frame.f_code
     file_name = code.co_filename

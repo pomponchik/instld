@@ -3,11 +3,11 @@ import inspect
 import pytest
 
 from instld.errors import InstallingPackageError
-from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments_by_frame
 
 
 def test_get_normal_options():
-    options = get_options_from_comments(inspect.currentframe())  # instld: lol kek, cheburek mek
+    options = get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol kek, cheburek mek
 
     assert isinstance(options, dict)
     assert len(options) == 2
@@ -18,15 +18,15 @@ def test_get_normal_options():
 
 def test_get_wrong_options():
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments(inspect.currentframe())  # instld: lol kek cheburek, cheburek mek
+        options = get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol kek cheburek, cheburek mek
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments(inspect.currentframe())  # instld: lol
+        options = get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments(inspect.currentframe())  # instld:
+        options = get_options_from_comments_by_frame(inspect.currentframe())  # instld:
 
 
 def test_get_empty_options():
-    options = get_options_from_comments(inspect.currentframe())
+    options = get_options_from_comments_by_frame(inspect.currentframe())
 
     assert isinstance(options, dict)
     assert len(options) == 0

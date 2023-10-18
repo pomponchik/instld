@@ -36,5 +36,7 @@ setup(
         'Topic :: Software Development :: Interpreters',
         'Topic :: Utilities',
         'Topic :: System :: Archiving :: Packaging',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Developers',
     ],
 )

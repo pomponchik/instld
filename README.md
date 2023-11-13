@@ -20,6 +20,7 @@ Thanks to this package, it is very easy to manage the lifecycle of packages.
 ## Table of contents
 
 - [**Quick start**](#quick-start)
+- [**REPL mode**](#repl-mode)
 - [**Script launch mode**](#script-launch-mode)
   - [**Special comment language**](#special-comment-language)
   - [**Using multiple environments**](#using-multiple-environments)
@@ -39,7 +40,7 @@ Install [it](https://pypi.org/project/instld/):
 pip install instld
 ```
 
-And use the library in one of two ways: by running your script through it or by importing a context manager from there.
+And use the library in one of three ways: by typing commands via REPL, by running your script through it or by importing a context manager from there.
 
 If you run the script [like this](#script-launch-mode), all dependencies will be automatically installed when the application starts and deleted when it stops:
 
@@ -58,6 +59,24 @@ with instld('some_package'):
 
 Read more about each method, its capabilities and limitations below.
 
+
+## REPL mode
+
+REPL mode is the fastest and easiest way to try out other people's libraries for your code. Just type this in your console:
+
+```bash
+instld
+```
+
+After that you will see a welcome message similar to this:
+
+```
+⚡ INSTLD REPL based on
+Python 3.11.6 (main, Oct  2 2023, 13:45:54) [Clang 15.0.0 (clang-1500.0.40.1)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> 
+```
 
 ## Script launch mode
 

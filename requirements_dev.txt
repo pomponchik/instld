@@ -4,3 +4,4 @@ twine==4.0.2
 wheel==0.40.0
 pytest-timeout==2.1.0
 contextif==0.0.3
+ruff==0.0.290

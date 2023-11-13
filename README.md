@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/pomponchik/instld/main/docs/assets/logo5.png)
+![logo](https://raw.githubusercontent.com/pomponchik/instld/main/docs/assets/logo_5.png)
 
 # INSTLD: the simplest package management
 

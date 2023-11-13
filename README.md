@@ -22,13 +22,13 @@ Thanks to this package, it is very easy to manage the lifecycle of packages.
 - [**Quick start**](#quick-start)
 - [**REPL mode**](#repl-mode)
 - [**Script launch mode**](#script-launch-mode)
-  - [**Special comment language**](#special-comment-language)
-  - [**Using multiple environments**](#using-multiple-environments)
 - [**Context manager mode**](#context-manager-mode)
   - [**Installing multiple packages**](#installing-multiple-packages)
   - [**Options**](#options)
   - [**Using an existing virtual environment**](#using-an-existing-virtual-environment)
   - [**Output and logging**](#output-and-logging)
+- [**Special comment language**](#special-comment-language)
+- [**Using multiple environments**](#using-multiple-environments)
 - [**How does it work?**](#how-does-it-work)
 
 
@@ -94,47 +94,7 @@ instld script.py
 
 The contents of the script will be executed in the same way as if you were running it through the `python script.py` command. If necessary, you can pass additional arguments to the command line, as if you are running a regular Python script. However, if your program has imports of any packages other than the built-in ones, they will be installed automatically. Installed packages are automatically cleaned up when you exit the program, so they don't leave any garbage behind.
 
-
-### Special comment language
-
-When using script launch or REPL mode, you can specify additional parameters for each import inside your program. To do this, you need to write immediately after it (but always in the same line!) a comment that starts with "instld:", separating key and value pairs with commas.
-
-As example, if the name of the imported module and the package name are different, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
-
-```python
-import f # instld: version 0.0.3, package fazy
-
-print(f('some string'))
-```
-
-You can also specify only the version or only the package name in the comment, they do not have to be specified together.
-
-
-### Using multiple environments
-
-The instld script launch mode provides a unique opportunity to use multiple virtual environments at the same time.
-
-Firstly, you can run scripts in the main virtual environment, and it will work exactly as you expect:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-instld script.py
-```
-
-When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there. Note that by default, the activated virtual environment is read-only. That is, it is assumed that you will install all the necessary libraries there before running your script. If you want to install packages in runtime in a specific virtual environment - read about the second method further.
-
-Secondly, you can specify the path to the virtual environment directly [in the comments](#special-comment-language) to a specific import using the `where` directive:
-
-```python
-import something  # instld: where path/to/the/venv
-```
-
-If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped, therefore, starting from the second launch, the download is no longer required.
-
-Note that the path to the virtual environment in this case should not contain spaces. In addition, there is no multiplatform way to specify directory paths using a comment. Therefore, it is not recommended to use paths consisting of more than one part.
-
-Since script launch mode uses a context manager to install packages "under the hood", you should also read about the features of installing packages in this way in the [corresponding section](#using-an-existing-virtual-environment).
+In this mode, as in [REPL](#repl-mode), a [special comment language](#special-comment-language) is fully supported.
 
 
 ## Context manager mode
@@ -199,7 +159,7 @@ with instld('flask==2.0.2') as context_1:
 > ⚠️  Keep in mind that although inter-thread isolation is used inside the library, working with contexts is not completely thread-safe. You can write code in such a way that two different contexts import different modules in separate threads at the same time. In this case, you may get paradoxical results. Therefore, it is recommended to additionally isolate with mutexes all cases where you import something from contexts in different threads.
 
 
-### Options
+## Options
 
 You can use [any options](https://pip.pypa.io/en/stable/cli/pip_install/) available for `pip`. To do this, you need to slightly change the name of the option, replacing the hyphens with underscores, and pass it as an argument to `instld`. Here is an example of how using the `--index-url` option will look like:
 
@@ -307,6 +267,48 @@ with instld('flask', catch_output=True):
 ```
 
 The `INFO` [level](https://docs.python.org/3/library/logging.html#logging-levels) is used by default. For errors - `ERROR`.
+
+
+## Special comment language
+
+When using script launch or REPL mode, you can specify additional parameters for each import inside your program. To do this, you need to write immediately after it (but always in the same line!) a comment that starts with "instld:", separating key and value pairs with commas.
+
+As example, if the name of the imported module and the package name are different, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
+
+```python
+import f # instld: version 0.0.3, package fazy
+
+print(f('some string'))
+```
+
+You can also specify only the version or only the package name in the comment, they do not have to be specified together.
+
+
+## Using multiple environments
+
+The instld script launch mode and REPL mode provides a unique opportunity to use multiple virtual environments at the same time.
+
+Firstly, you can run scripts in the main virtual environment, and it will work exactly as you expect:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+instld script.py
+```
+
+When the "import" command is executed in your script, the package will first be searched in the activated virtual environment, and only then downloaded if it is not found there. Note that by default, the activated virtual environment is read-only. That is, it is assumed that you will install all the necessary libraries there before running your script. If you want to install packages in runtime in a specific virtual environment - read about the second method further.
+
+Secondly, you can specify the path to the virtual environment directly [in the comments](#special-comment-language) to a specific import using the `where` directive:
+
+```python
+import something  # instld: where path/to/the/venv
+```
+
+If the path you specified does not exist when you first run the script, it will be automatically created. Libraries installed in this way are not deleted when the script is stopped, therefore, starting from the second launch, the download is no longer required.
+
+Note that the path to the virtual environment in this case should not contain spaces. In addition, there is no multiplatform way to specify directory paths using a comment. Therefore, it is not recommended to use paths consisting of more than one part.
+
+Since script launch mode uses a context manager to install packages "under the hood", you should also read about the features of installing packages in this way in the [corresponding section](#using-an-existing-virtual-environment).
 
 
 ## How does it work?

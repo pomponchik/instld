@@ -6,3 +6,6 @@ class RestartingCommandError(Exception):
 
 class RunningCommandError(Exception):
     pass
+
+class CommentFormatError(Exception):
+    pass

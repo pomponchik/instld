@@ -42,10 +42,10 @@ class Context:
         yield
         sys.path = old_path
 
-    def install(self, *package_names, **options):
+    def install(self, *package_names, catch_output=False, **options):
         if not package_names:
             raise ValueError('You need to pass at least one package name.')
 
         options = convert_options(options)
-        with self.installer(package_names, options=options):
+        with self.installer(package_names, catch_output=catch_output, options=options):
             pass

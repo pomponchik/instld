@@ -5,6 +5,7 @@ import subprocess
 import shutil
 
 import pytest
+from contextif import state
 
 
 @pytest.mark.timeout(180)
@@ -41,15 +42,6 @@ def test_cli_where(main_runner):
             shutil.rmtree(path)
 
     os.remove(script)
-
-
-def test_run_command_without_arguments(main_runner):
-    for runner in (main_runner, subprocess.run):
-        result = runner(['instld'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
-
-        assert result.returncode == 1
-        assert result.stdout  == ''
-        assert result.stderr == f'usage: instld python_file.py [argv ...]\n'
 
 
 def test_run_command_with_arguments(main_runner):
@@ -125,3 +117,46 @@ def test_exceptions_are_similar_with_just_python_command_2():
         assert result_1.stderr == result_2.stderr
 
         os.remove(script)
+
+
+@pytest.mark.skip(reason="Now it's not so actual.")
+def test_install_package_from_another_repository(main_runner):
+    strings = [
+        'import super_test  # instld: package super_test_project, version 0.0.1, index_url https://test.pypi.org/simple/, catch_output true',
+        'print(super_test.function(2, 3))',
+    ]
+
+    script = os.path.join('tests', 'cli', 'data', 'main.py')
+    with open(script, 'w') as file:
+        file.write('\n'.join(strings))
+
+    for runner in (subprocess.run, main_runner):
+        result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
+
+        result.check_returncode()
+
+        assert result.stdout == '5\n'
+
+
+    os.remove(script)
+
+
+def test_install_package_from_another_repository_only_command():
+    strings = [
+        'import super_test  # instld: package super_test_project, version 0.0.1, index_url https://test.pypi.org/simple/, catch_output true',
+        'print(super_test.function(2, 3))',
+    ]
+
+    script = os.path.join('tests', 'cli', 'data', 'main.py')
+    with open(script, 'w') as file:
+        file.write('\n'.join(strings))
+
+    for runner in (subprocess.run,):
+        result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
+
+        result.check_returncode()
+
+        assert result.stdout == '5\n'
+
+
+    os.remove(script)

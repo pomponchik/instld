@@ -1,10 +1,8 @@
 from instld.errors import InstallingPackageError
-from instld.cli.parsing_comments.get_comment_string import get_comment_string
+from instld.cli.parsing_comments.get_comment_string import get_comment_string_by_frame
 
 
-def get_options_from_comments(frame):
-    comment_string = get_comment_string(frame)
-
+def get_options_from_comments(comment_string):
     result = {}
 
     if comment_string is not None:
@@ -21,4 +19,11 @@ def get_options_from_comments(frame):
             option_value = splitted_option[1].strip().lower()
             result[option_name] = option_value
 
+    result.pop('doc', None)
+    result.pop('comment', None)
+
     return result
+
+def get_options_from_comments_by_frame(frame):
+    comment_string = get_comment_string_by_frame(frame)
+    return get_options_from_comments(comment_string)

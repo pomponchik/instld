@@ -8,7 +8,7 @@ requirements = []
 
 setup(
     name='instld',
-    version='0.0.21',
+    version='0.0.22',
     author='Evgeniy Blinov',
     author_email='zheni-b@yandex.ru',
     description='The simplest package management',
@@ -36,6 +36,7 @@ setup(
         'Topic :: Software Development :: Interpreters',
         'Topic :: Utilities',
         'Topic :: System :: Archiving :: Packaging',
-        'Topic :: System :: Archiving :: Installation/Setup',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Developers',
     ],
 )

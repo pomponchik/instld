@@ -1,5 +1,6 @@
 import os
 import sys
+import code
 import builtins
 import importlib
 import inspect
@@ -8,13 +9,16 @@ from tempfile import TemporaryDirectory
 from threading import RLock
 
 import instld
-from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments
+from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments_by_frame
 from instld.cli.parsing_arguments.get_python_file import get_python_file
 from instld.cli.traceback_cutting.cutting import set_cutting_excepthook
+from instld.state_management.storage import state_storage, RunType
+from instld.errors import CommentFormatError
 
 
 def main():
     python_file = get_python_file()
+    state_storage.run_type = RunType.script
 
     with instld() as context:
         lock = RLock()
@@ -49,12 +53,20 @@ def main():
             last_name = splitted_name[-1]
 
             current_frame = inspect.currentframe()
-            options = get_options_from_comments(current_frame.f_back)
+            options = get_options_from_comments_by_frame(current_frame.f_back)
 
             package_name = options.pop('package', base_name)
 
             if 'version' in options:
                 package_name = f'{package_name}=={options.pop("version")}'
+
+            catch_output = options.pop('catch_output', 'no').lower()
+            if catch_output in ('yes', 'on', 'true'):
+                catch_output = True
+            elif catch_output in ('no', 'off', 'false'):
+                catch_output = False
+            else:
+                raise CommentFormatError('For option "catch_output" you can use the following values: "yes", "on", "true", "no", "off", "false".')
 
             current_context = get_current_context(options.pop('where', None))
 
@@ -63,7 +75,7 @@ def main():
                     try:
                         result = __import__(name, *args, **kwargs)
                     except (ModuleNotFoundError, ImportError) as e:
-                        current_context.install(package_name)
+                        current_context.install(package_name, catch_output=catch_output, **options)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result
 
@@ -78,13 +90,38 @@ def main():
 
                     return result
 
-    builtins.__import__ = import_wrapper
+    if python_file is None:
+        try:
+            import readline
+        except ImportError:
+            pass
 
-    spec = importlib.util.spec_from_file_location('kek', os.path.abspath(python_file))
-    module = importlib.util.module_from_spec(spec)
-    sys.modules['__main__'] = module
-    set_cutting_excepthook(4)
-    spec.loader.exec_module(module)
+        state_storage.run_type = RunType.REPL
+        builtins.__import__ = import_wrapper
+
+        class REPL(code.InteractiveConsole):
+            def push(self, line):
+                state_storage.last_string = line
+                return super().push(line)
+
+
+        banner_strings = [
+            '⚡ INSTLD REPL based on\n'
+            'Python %s on %s\n' % (sys.version, sys.platform),
+            'Type "help", "copyright", "credits" or "license" for more information.\n',
+        ]
+        banner = ''.join(banner_strings)
+
+        REPL().interact(banner=banner)
+
+
+    else:
+        builtins.__import__ = import_wrapper
+        spec = importlib.util.spec_from_file_location('kek', os.path.abspath(python_file))
+        module = importlib.util.module_from_spec(spec)
+        sys.modules['__main__'] = module
+        set_cutting_excepthook(4)
+        spec.loader.exec_module(module)
 
 
 if __name__ == "__main__":

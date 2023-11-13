@@ -3,7 +3,7 @@ import inspect
 import pytest
 
 from instld.errors import InstallingPackageError
-from instld.cli.parsing_comments.get_comment_string import get_comment_string_by_frame
+from instld.cli.parsing_comments.get_comment_string import get_comment_string_by_frame, get_comment_substring_from_string
 
 
 def test_get_comment_started_with_instld():
@@ -24,3 +24,11 @@ def test_get_comment_without_comment():
 def test_get_comment_wrong():
     with pytest.raises(InstallingPackageError):
         comment = get_comment_string_by_frame(inspect.currentframe())  # instld:
+
+
+def test_get_comment_substring_from_string():
+    assert get_comment_substring_from_string('a + b # kek') is None
+    assert get_comment_substring_from_string('a + b # instld: lol kek') == 'lol kek'
+
+    with pytest.raises(InstallingPackageError):
+        assert get_comment_substring_from_string('a + b # instld: ')

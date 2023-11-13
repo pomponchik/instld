@@ -12,11 +12,13 @@ import instld
 from instld.cli.parsing_comments.get_options_from_comments import get_options_from_comments_by_frame
 from instld.cli.parsing_arguments.get_python_file import get_python_file
 from instld.cli.traceback_cutting.cutting import set_cutting_excepthook
+from instld.state_management.storage import state_storage, RunType
 from instld.errors import CommentFormatError
 
 
 def main():
     python_file = get_python_file()
+    state_storage.run_type = RunType.script
 
     with instld() as context:
         lock = RLock()
@@ -52,7 +54,6 @@ def main():
 
             current_frame = inspect.currentframe()
             options = get_options_from_comments_by_frame(current_frame.f_back)
-            #print('OPTIONS:', options)
 
             package_name = options.pop('package', base_name)
 
@@ -74,7 +75,6 @@ def main():
                     try:
                         result = __import__(name, *args, **kwargs)
                     except (ModuleNotFoundError, ImportError) as e:
-                        #print('OPTIONS>', options, package_name)
                         current_context.install(package_name, catch_output=catch_output, **options)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result
@@ -90,18 +90,19 @@ def main():
 
                     return result
 
-
-
     if python_file is None:
         try:
             import readline
         except ImportError:
             pass
 
+        state_storage.run_type = RunType.REPL
         builtins.__import__ = import_wrapper
 
         class REPL(code.InteractiveConsole):
-            pass
+            def push(self, line):
+                state_storage.last_string = line
+                return super().push(line)
 
 
         banner_strings = [

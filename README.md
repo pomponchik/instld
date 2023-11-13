@@ -48,6 +48,8 @@ If you run the script [like this](#script-launch-mode), all dependencies will be
 instld script.py
 ```
 
+The [REPL mode](#repl-mode) works in a similar way, you just need to type `instld` in the console to enter it.
+
 You can also call the [context manager](#context-manager-mode) from your code:
 
 ```python
@@ -80,9 +82,11 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Enjoy the regular Python [interactive console mode](https://docs.python.org/3/tutorial/interpreter.html#interactive-mode)! Any libraries that you ask for will be installed within the session, and after exiting it, they will be deleted without a trace. You don't need to "clean up" anything after exiting the console.
 
+In this mode, a [special comment language](#special-comment-language) is fully supported.
+
 ## Script launch mode
 
-You can use `instld` to run your script. To do this, you need to run a command like this in the console:
+You can use `instld` to run your script from a file. To do this, you need to run a command like this in the console:
 
 ```bash
 instld script.py
@@ -93,7 +97,7 @@ The contents of the script will be executed in the same way as if you were runni
 
 ### Special comment language
 
-When using script launch mode, you can specify additional parameters for each import inside your program. To do this, you need to write immediately after it (but always in the same line!) a comment that starts with "instld:", separating key and value pairs with commas.
+When using script launch or REPL mode, you can specify additional parameters for each import inside your program. To do this, you need to write immediately after it (but always in the same line!) a comment that starts with "instld:", separating key and value pairs with commas.
 
 As example, if the name of the imported module and the package name are different, this code imports the `f` function from the [`fazy`](https://github.com/pomponchik/fazy) library version `0.0.3`:
 

@@ -75,8 +75,10 @@ After that you will see a welcome message similar to this:
 Python 3.11.6 (main, Oct  2 2023, 13:45:54) [Clang 15.0.0 (clang-1500.0.40.1)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 
->>> 
+>>>
 ```
+
+Enjoy the regular Python [interactive console mode](https://docs.python.org/3/tutorial/interpreter.html#interactive-mode)! Any libraries that you ask for will be installed within the session, and after exiting it, they will be deleted without a trace. You don't need to "clean up" anything after exiting the console.
 
 ## Script launch mode
 

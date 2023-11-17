@@ -3,6 +3,7 @@ import sys
 import code
 import builtins
 import importlib
+import importlib.util
 import inspect
 from contextlib import contextmanager
 from threading import RLock

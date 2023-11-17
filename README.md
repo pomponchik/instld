@@ -8,6 +8,7 @@
 [![Test-Package](https://github.com/pomponchik/instld/actions/workflows/tests_and_coverage.yml/badge.svg)](https://github.com/pomponchik/instld/actions/workflows/tests_and_coverage.yml)
 [![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 Thanks to this package, it is very easy to manage the lifecycle of packages.
 

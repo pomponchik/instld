@@ -113,6 +113,8 @@ def test_exceptions_are_similar_with_just_python_command_2():
 
         assert result_1.returncode == result_2.returncode
         assert result_1.stdout == result_2.stdout
+        print('1:', result_1.stderr)
+        print('2:', result_2.stderr)
         assert result_1.stderr == result_2.stderr
 
         os.remove(script)

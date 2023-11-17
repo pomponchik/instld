@@ -36,9 +36,7 @@ class Context:
         old_path = sys.path
         sys.path = [self.where] + copy.copy(self.original_path)
         if module_name in sys.modules:
-            old_module = sys.modules.pop(module_name)
-        else:
-            old_module = None
+            sys.modules.pop(module_name)
         yield
         sys.path = old_path
 

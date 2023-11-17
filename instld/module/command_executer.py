@@ -1,6 +1,6 @@
 import sys
 from threading import Thread, Lock
-from subprocess import Popen, PIPE, CalledProcessError
+from subprocess import Popen, PIPE
 
 from instld.module.empty_logger import EmptyLogger
 from instld.errors import RestartingCommandError, RunningCommandError

@@ -3,7 +3,6 @@ import sys
 import tempfile
 from functools import partial
 
-from io import StringIO
 from contextlib import contextmanager
 
 from instld.errors import InstallingPackageError, RunningCommandError

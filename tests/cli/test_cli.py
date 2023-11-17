@@ -5,7 +5,6 @@ import subprocess
 import shutil
 
 import pytest
-from contextif import state
 
 
 @pytest.mark.timeout(180)

@@ -1,8 +1,5 @@
-import io
-import os
 import sys
 import traceback
-from contextlib import redirect_stderr
 
 from instld.cli.traceback_cutting.traceback_utils import cut_base_of_traceback
 

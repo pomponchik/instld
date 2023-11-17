@@ -1,6 +1,7 @@
 pytest==7.4.1
 coverage==7.2.7
 twine==4.0.2
+build==0.9.0
 wheel==0.40.0
 pytest-timeout==2.1.0
 contextif==0.0.3

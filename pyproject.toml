@@ -1,0 +1,37 @@
+[build-system]
+requires = ['setuptools==68.0.0']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'instld'
+version = '0.0.22'
+authors = [
+  { name='Evgeniy Blinov', email='zheni-b@yandex.ru' },
+]
+description = 'The simplest package management'
+readme = 'README.md'
+requires-python = '>=3.7'
+classifiers = [
+  'Operating System :: MacOS :: MacOS X',
+  'Operating System :: Microsoft :: Windows',
+  'Operating System :: POSIX',
+  'Programming Language :: Python :: 3.7',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'License :: OSI Approved :: MIT License',
+  'Topic :: Software Development :: Libraries',
+  'Topic :: Software Development :: Interpreters',
+  'Topic :: Utilities',
+  'Topic :: System :: Archiving :: Packaging',
+  'Intended Audience :: System Administrators',
+  'Intended Audience :: Developers',
+]
+
+[project.scripts]
+instld = 'instld.cli.main:main'
+
+[project.urls]
+'Source' = 'https://github.com/pomponchik/instld'
+'Tracker' = 'https://github.com/pomponchik/instld/issues'

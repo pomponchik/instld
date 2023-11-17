@@ -25,7 +25,7 @@ jobs:
 
     - name: Install the library
       shell: bash
-      run: python setup.py install
+      run: pip install .
 
     - name: Print all libs
       shell: bash

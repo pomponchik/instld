@@ -120,7 +120,11 @@ def main():
         spec = importlib.util.spec_from_file_location('kek', os.path.abspath(python_file))
         module = importlib.util.module_from_spec(spec)
         sys.modules['__main__'] = module
-        set_cutting_excepthook(4)
+        if sys.platform.lower() in ('win32',):
+            cutting_trace_size = 5
+        else:
+            cutting_trace_size = 4
+        set_cutting_excepthook(cutting_trace_size)
         spec.loader.exec_module(module)
 
 

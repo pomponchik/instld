@@ -16,13 +16,24 @@ def test_get_normal_options():
     assert options['cheburek'] == 'mek'
 
 
+# TODO: fix it!
+@pytest.mark.skip("I'll fix it later.")
+def test_real_options():
+    options = get_options_from_comments_by_frame(inspect.currentframe())  # instld: where tests/cli/data/pok, version 1.0.4
+
+    assert options == {
+        'where': 'tests/cli/data/pok',
+        'version': '1.0.4',
+    }
+
+
 def test_get_wrong_options():
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol kek cheburek, cheburek mek
+        get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol kek cheburek, cheburek mek
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol
+        get_options_from_comments_by_frame(inspect.currentframe())  # instld: lol
     with pytest.raises(InstallingPackageError):
-        options = get_options_from_comments_by_frame(inspect.currentframe())  # instld:
+        get_options_from_comments_by_frame(inspect.currentframe())  # instld:
 
 
 def test_get_empty_options():

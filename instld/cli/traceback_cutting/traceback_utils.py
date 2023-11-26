@@ -19,7 +19,7 @@ def cut_base_of_traceback(traceback_object, base_size):
 def cut_importlib_bug(traceback_object):
     try:
         while traceback_object is not None:
-            if not (traceback_object.tb_frame.f_code.co_qualname == '_call_with_frames_removed' and traceback_object.tb_frame.f_code.co_filename == '<frozen importlib._bootstrap>'):
+            if not (traceback_object.tb_frame.f_code.co_filename == '<frozen importlib._bootstrap>' or traceback_object.tb_frame.f_code.co_filename == '<frozen importlib._bootstrap_external>'):
                 return traceback_object
             traceback_object = traceback_object.tb_next
     except AttributeError:

@@ -3,7 +3,6 @@ import sys
 import tempfile
 from functools import partial
 
-from io import StringIO
 from contextlib import contextmanager
 
 from instld.errors import InstallingPackageError, RunningCommandError
@@ -52,8 +51,6 @@ def pip_context(packages_names, options, logger, runner, catch_output, where):
                 new_error = InstallingPackageError(f'{str(e)} It occurred when installing one of the following packages: {", ".join(packages_names)}.')
                 new_error.stdout = e.stdout
                 new_error.stderr = e.stderr
-                #print('STDOUT', e.stdout)
-                #print('STDERR', e.stderr)
                 raise new_error from e
 
             yield Context(where, logger, catch_output, options, partial(pip_context, logger=logger, runner=runner, catch_output=catch_output, where=directory))

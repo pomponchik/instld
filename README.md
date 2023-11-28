@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/pomponchik/instld/main/docs/assets/logo5.png)
+![logo](https://raw.githubusercontent.com/pomponchik/instld/main/docs/assets/logo_5.png)
 
 # INSTLD: the simplest package management
 
@@ -8,9 +8,11 @@
 [![Test-Package](https://github.com/pomponchik/instld/actions/workflows/tests_and_coverage.yml/badge.svg)](https://github.com/pomponchik/instld/actions/workflows/tests_and_coverage.yml)
 [![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)
 [![PyPI version](https://badge.fury.io/py/instld.svg)](https://badge.fury.io/py/instld)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 Thanks to this package, it is very easy to manage the lifecycle of packages.
 
+- ⚡ Run your code without installing libraries.
 - ⚡ You can use 2 different versions of the same library in the same program.
 - ⚡ You can use incompatible libraries in the same project, as well as libraries with incompatible/conflicting dependencies.
 - ⚡ It's easy to share written scripts. The script file becomes self-sufficient - the user does not need to install the necessary libraries.

@@ -3,9 +3,9 @@ import sys
 import code
 import builtins
 import importlib
+import importlib.util
 import inspect
 from contextlib import contextmanager
-from tempfile import TemporaryDirectory
 from threading import RLock
 
 import instld
@@ -74,7 +74,7 @@ def main():
                 with set_import():
                     try:
                         result = __import__(name, *args, **kwargs)
-                    except (ModuleNotFoundError, ImportError) as e:
+                    except (ModuleNotFoundError, ImportError):
                         current_context.install(package_name, catch_output=catch_output, **options)
                         result = current_context.import_here(base_name)
                         sys.modules[base_name] = result
@@ -92,7 +92,7 @@ def main():
 
     if python_file is None:
         try:
-            import readline
+            import readline  # noqa: F401
         except ImportError:
             pass
 
@@ -120,9 +120,13 @@ def main():
         spec = importlib.util.spec_from_file_location('kek', os.path.abspath(python_file))
         module = importlib.util.module_from_spec(spec)
         sys.modules['__main__'] = module
-        set_cutting_excepthook(4)
+        if sys.platform.lower() in ('win32',):
+            cutting_trace_size = 4
+        else:
+            cutting_trace_size = 4
+        set_cutting_excepthook(cutting_trace_size)
         spec.loader.exec_module(module)
 
 
 if __name__ == "__main__":
-    start()
+    main()

@@ -61,6 +61,7 @@ def convert_options(options):
             '--require-hashes',
             '--no-clean',
             '--no-index',
+            '--isolated',
         )
 
         if key in string_variants:

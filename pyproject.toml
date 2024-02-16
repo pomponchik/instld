@@ -33,6 +33,10 @@ classifiers = [
 [project.scripts]
 instld = 'instld.cli.main:main'
 
+[tool.mutmut]
+paths_to_mutate="instld"
+runner="pytest"
+
 [project.urls]
 'Source' = 'https://github.com/pomponchik/instld'
 'Tracker' = 'https://github.com/pomponchik/instld/issues'

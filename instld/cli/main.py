@@ -117,7 +117,7 @@ def main():
 
     else:
         builtins.__import__ = import_wrapper
-        spec = importlib.util.spec_from_file_location('kek', os.path.abspath(python_file))
+        spec = importlib.util.spec_from_file_location('__main__', os.path.abspath(python_file))
         module = importlib.util.module_from_spec(spec)
         sys.modules['__main__'] = module
         if sys.platform.lower() in ('win32',):

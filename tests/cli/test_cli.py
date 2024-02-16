@@ -159,3 +159,22 @@ def test_install_package_from_another_repository_only_command():
 
 
     os.remove(script)
+
+
+def test_run_script_and_check_the___name__():
+    strings = [
+        'print(__name__)',
+    ]
+
+    script = os.path.join('tests', 'cli', 'data', 'main.py')
+    with open(script, 'w') as file:
+        file.write('\n'.join(strings))
+
+    for runner in (subprocess.run,):
+        result = runner(['instld', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=100, universal_newlines=True)
+
+        result.check_returncode()
+
+        assert result.stdout == '__main__\n'
+
+    os.remove(script)

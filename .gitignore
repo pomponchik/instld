@@ -12,3 +12,5 @@ tests/cli/data/chpok
 tests/cli/data/pok
 .idea
 .ruff_cache
+.mutmut-cache
+html

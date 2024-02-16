@@ -5,6 +5,7 @@
 [![Downloads](https://static.pepy.tech/badge/instld/month)](https://pepy.tech/project/instld)
 [![Downloads](https://static.pepy.tech/badge/instld)](https://pepy.tech/project/instld)
 [![codecov](https://codecov.io/gh/pomponchik/instld/graph/badge.svg?token=XuhCNeksjG)](https://codecov.io/gh/pomponchik/instld)
+[![Lines of code](https://sloc.xyz/github/pomponchik/instld/?category=code)](https://github.com/boyter/scc/)
 [![Hits-of-Code](https://hitsofcode.com/github/pomponchik/instld?branch=main)](https://hitsofcode.com/github/pomponchik/instld/view?branch=main)
 [![Tests](https://github.com/pomponchik/instld/actions/workflows/tests_and_coverage.yml/badge.svg)](https://github.com/pomponchik/instld/actions/workflows/tests_and_coverage.yml)
 [![Python versions](https://img.shields.io/pypi/pyversions/instld.svg)](https://pypi.python.org/pypi/instld)
